@@ -1,21 +1,77 @@
 {
 	"id": 1,
 	"animals": [
-		{"name": "HARRY PIGSTER", "typeName": "African Pig", "typeId": "pig", "iconId": "pig1", "voice": "wolf", "info": "PUSTI PLZ", "infoVoice": "SORI YA VOLK", "infoAnalyse": "MY ANALIS DAT GUT", "footprints": "wolf", "analyse": [0, 1, 1, 0, 0, 0,
-		                                                                                                                                           1, 0, 1, 1, 1, 0,
-																												                                   0, 0, 1, 1, 0, 1,
-																												                                   1, 1, 1, 0, 1, 0,
-																												                                   1, 0, 1, 1, 0, 1]},
-		{"name": "DILE COWLACHLAN", "typeName": "Red Bull", "typeId": "cow", "iconId": "cow1", "voice": "cow", "info": "Ya KOROVA LUL", "footprints": "cow", "analyse": [0, 1, 1, 0, 0, 0,
-		                                                                                                                                        1, 0, 0, 1, 1, 0,
-																												                                0, 0, 0, 1, 0, 1,
-																												                                0, 1, 0, 0, 1, 0,
-																												                                0, 0, 1, 1, 0, 1]}
+		{"name": "HARRY PIGSTER", "typeName": "African Pig", "typeId": "pig", "iconId": "pig1", "voice": "pig", "footprints": "pig"},
+		{"name": "LADY COWID", "typeName": "Chinese Cow", "typeId": "cow", "iconId": "cow1", "voice": "cow", "footprints": "cow"},
+		{"name": "ALBERT WOLFENSTEIN", "typeName": "German Wolf", "typeId": "wolf", "iconId": "wolf", "voice": "wolf", "footprints": "wolf"},
+		{"name": "ALEXANDER OVECHKIN", "typeName": "Canadian Sheep", "typeId": "sheep", "iconId": "sheep1", "voice": "pig", "footprints": "sheep",
+		"infoVoice": "I HAD TO SHOUT AT THE GOALKEEPER IN OUR SQUAD :("},
+		{"name": "PETER PORKER", "typeName": "NY Pig", "typeId": "pig", "iconId": "pig1", "voice": "wolf", "footprints": "pig"},
+		{"name": "LAURA PIGPALMER", "typeName": "Lazy Pig", "typeId": "wolf", "iconId": "pig2", "voice": "pig", "footprints": "wolf",
+			"infoFootprints": "I FEEL I'LL BE DEAD SOON, PLEASE SAVE ME", "analyse":
+		[1, 1, 1, 0, 0, 0,
+			1, 0, 0, 1, 1, 0,
+			0, 0, 0, 1, 0, 1,
+			1, 1, 0, 1, 1, 0,
+			1, 0, 1, 1, 0, 1]},
+		{"name": "KYLE COWLACHLAN", "typeName": "Red Bull", "typeId": "cow", "iconId": "cow2", "voice": "cow", "footprints": "cow",
+		"info": "HAVE YOU SEEN LAURA PIGPALMER? PLEASE NAVIGATE ME TO HER","analyse":
+		[1, 0, 1, 0, 0, 1,
+			1, 0, 0, 1, 1, 1,
+			0, 0, 0, 1, 0, 1,
+			1, 1, 0, 0, 1, 0,
+			1, 0, 0, 1, 0, 1]},
+		{"name": "DIANA FRIENDSHEEP", "typeName": "Italian Sheep", "typeId": "sheep", "iconId": "sheep1", "voice": "pig", "footprints": "sheep",
+			"infoVoice": "AND I SAY HEY, LET'S BE FRIENDS", "analyse":
+		[1, 0, 1, 0, 0, 0,
+			1, 1, 1, 1, 1, 0,
+			1, 0, 0, 1, 0, 1,
+			1, 0, 0, 0, 1, 0,
+			1, 0, 1, 0, 0, 1]},
+		{"name": "BERNARD PIGMALION", "typeName": "English Pig", "typeId": "pig", "iconId": "pig1", "voice": "pig", "footprints": "pig","analyse":
+		[1, 0, 1, 0, 0, 1,
+			1, 0, 0, 1, 1, 1,
+			0, 0, 0, 1, 0, 1,
+			1, 1, 0, 0, 1, 0,
+			1, 0, 0, 1, 0, 1]},
+		{"name": "WOLFGANG MOZART", "typeName": "Austrian Wolf", "typeId": "wolf", "iconId": "wolf", "voice": "pig", "footprints": "wolf",
+			"infoVoice": "I HAD TO FINISH THE 9TH SYMPHONY. I HEARD YOU HAVE A PIANO", "analyse":
+			[0, 0, 1, 0, 0, 0,
+			1, 0, 0, 1, 1, 1,
+			1, 0, 1, 1, 0, 1,
+			0, 0, 0, 0, 1, 0,
+			1, 0, 1, 1, 0, 1]},
+		{"name": "MARY MORCOWKA", "typeName": "Orange Cow", "typeId": "cow", "iconId": "cow1", "voice": "cow", "footprints": "cow",
+			"info": "FORGET MEET, GO VEGAN!", "analyse":
+			[1, 1, 1, 0, 0, 0,
+			1, 0, 0, 1, 1, 0,
+			0, 0, 0, 1, 0, 1,
+			1, 1, 0, 1, 1, 0,
+			1, 0, 1, 1, 0, 1]},
+		{"name": "ED SHEEPRAN", "typeName": "London Sheep", "typeId": "sheep", "iconId": "sheep2", "voice": "cow", "footprints": "sheep",
+			"infoVoice": "I'M IN LOVE WITH THE SHEEP OF YOUUU", "analyse":
+		[0, 1, 1, 0, 0, 0,
+			1, 0, 0, 1, 1, 0,
+			0, 0, 0, 1, 0, 1,
+			1, 1, 0, 0, 1, 0,
+			1, 0, 1, 1, 0, 1]},
+		{"name": "QUENTIN COWBOY", "typeName": "Violent Bull", "typeId": "cow", "iconId": "cow2", "voice": "cow", "footprints": "cow", "analyse":
+		[1, 0, 1, 0, 0, 0,
+			1, 1, 1, 1, 1, 0,
+			1, 0, 0, 1, 0, 1,
+			1, 0, 0, 0, 1, 0,
+			1, 0, 1, 0, 0, 1]},
+		{"name": "NICCOLO PIGANINI", "typeName": "Italian Royal Pig", "typeId": "pig", "iconId": "pig2", "voice": "wolf", "footprints": "pig",
+		"infoVoice": "WHEN YOU PLAY VIOLIN, NO ONE PAYS ATTENTION TO YOUR VOICE","analyse":
+		[1, 0, 1, 0, 0, 1,
+			1, 0, 0, 1, 1, 1,
+			0, 0, 0, 1, 0, 1,
+			1, 1, 0, 0, 1, 0,
+			1, 0, 0, 1, 0, 1]}
 	],
 	"rules": [
 		{"rule": "NO WOLVES", "noValues": ["wolf"]},
-		{"rule": "NO INFECTED", "noValues": ["infected"]},
-		{"rule": "NO PIGS", "noValues": ["pig"]}
+		{"rule": "FARM ANIMALS ARE WELCOME", "noValues": []}
 	],
 	"analysTemplate": [2, 3, -4, 1, -5, -3],
 	"analysTemplateColors" : [1, 0, 1, 1, 0, 0]
