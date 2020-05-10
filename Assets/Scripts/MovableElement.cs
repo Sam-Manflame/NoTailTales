@@ -1,29 +1,95 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UIElements;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class MovableElement : MonoBehaviour
+public class MovableElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    [SerializeField]
+    private string elementId = "undefined";
+    [SerializeField]
+    private bool canBeRemovedLater = false;
+    
+    private bool removeable = false;
 
+    private bool move = false;
+
+    private Vector2 prevPos = new Vector2();
+
+    private float moveSpeed = 110f;
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        move = true;
+        prevPos.Set(eventData.position.x, eventData.position.y);
+        //Debug.Log(eventData.position);
+        transform.SetAsLastSibling();
     }
 
-    // Update is called once per frame
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        move = false;
+
+        if (canBeRemoved())
+        {
+            remove();
+        }
+    }
+
     void Update()
     {
-        
+        if (move)
+        {
+            Vector3 localPos = Camera.allCameras[0].WorldToScreenPoint(transform.localPosition);
+            Vector3 translation = Camera.allCameras[0].ScreenToWorldPoint(new Vector3(localPos.x + (Input.mousePosition.x - prevPos.x) * moveSpeed, localPos.y + (Input.mousePosition.y - prevPos.y) * moveSpeed, localPos.z));
+            transform.localPosition = translation;
+            prevPos.Set(Input.mousePosition.x, Input.mousePosition.y);
+            //Debug.Log(Input.mousePosition);
+
+            
+            if (GetComponent<Image>() != null)
+            {
+                if (canBeRemoved())
+                    GetComponent<Image>().color = Color.red;
+                else
+                    GetComponent<Image>().color = Color.white;
+            }
+        }
     }
 
-    void OnMouseOver()
+    private bool canBeRemoved()
     {
-        Debug.Log("over");
+        if (removeable)
+        {
+            Vector2 screenPosition = Camera.allCameras[0].WorldToScreenPoint(transform.position);
+            Rect cameraRect = FindObjectOfType<Canvas>().pixelRect;
+            Rect rect = GetComponent<RectTransform>().rect;
+            rect.x = screenPosition.x - rect.width / 2;
+            rect.y = screenPosition.y - rect.height / 2;
+
+            Rect r = new Rect(
+                Mathf.Max(rect.x, cameraRect.x),
+                Mathf.Max(rect.y, cameraRect.y),
+                Mathf.Min(rect.x + rect.width, cameraRect.x + cameraRect.width) - Mathf.Max(rect.x, cameraRect.x),
+                Mathf.Min(rect.y + rect.height, cameraRect.y + cameraRect.height) - Mathf.Max(rect.y, cameraRect.y));
+
+
+            return !rect.Equals(r) && r.width * r.height < rect.width * rect.height / 2;
+        }
+        return false;
     }
 
-    void OnMouseDown()
+    public bool isCanBeRemovedLater()
     {
-        Debug.Log("down");
+        return canBeRemovedLater;
+    }
+
+    public void setRemoveable(bool val)
+    {
+        removeable = val;
+    }
+
+    private void remove()
+    {
+        Destroy(gameObject);
     }
 }

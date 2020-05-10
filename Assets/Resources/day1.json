@@ -1,0 +1,22 @@
+{
+	"id": 1,
+	"animals": [
+		{"name": "HARRY PIGSTER", "typeName": "African Pig", "typeId": "pig", "iconId": "pig1", "voice": "wolf", "info": "PUSTI PLZ", "infoVoice": "SORI YA VOLK", "infoAnalyse": "MY ANALIS DAT GUT", "footprints": "wolf", "analyse": [0, 1, 1, 0, 0, 0,
+		                                                                                                                                           1, 0, 1, 1, 1, 0,
+																												                                   0, 0, 1, 1, 0, 1,
+																												                                   1, 1, 1, 0, 1, 0,
+																												                                   1, 0, 1, 1, 0, 1]},
+		{"name": "DILE COWLACHLAN", "typeName": "Red Bull", "typeId": "cow", "iconId": "cow1", "voice": "cow", "info": "Ya KOROVA LUL", "footprints": "cow", "analyse": [0, 1, 1, 0, 0, 0,
+		                                                                                                                                        1, 0, 0, 1, 1, 0,
+																												                                0, 0, 0, 1, 0, 1,
+																												                                0, 1, 0, 0, 1, 0,
+																												                                0, 0, 1, 1, 0, 1]}
+	],
+	"rules": [
+		{"rule": "NO WOLVES", "noValues": ["wolf"]},
+		{"rule": "NO INFECTED", "noValues": ["infected"]},
+		{"rule": "NO PIGS", "noValues": ["pig"]}
+	],
+	"analysTemplate": [2, 3, -4, 1, -5, -3],
+	"analysTemplateColors" : [1, 0, 1, 1, 0, 0]
+}
