@@ -1,0 +1,105 @@
+{
+	"id": 3,
+	"radio": [
+		"KH-RRR.. KHR.. \n Morning, guys. We've got through \n the first day of this. Together.",
+		"We've saved the animals from fire \n and now they are safe on the farm.",
+		"KH-RRR.. We do good things, guys, we'll be blessed. \n But there is a big problem:",
+		"Some animals were infected.. KH-RRR.. \n With strange virus. And it's spreading",
+		"Every animal's health has to be checked \n from now on. You'll be given instructions.",
+		"Our goal is to save animals, so we should save them \n not only from fire, but from virus as well.",
+		"KH-RRR.. [whispering] In order to.. KH-KHRR.. \n sell them.. KH-RRR.. HA-HA-HA \n Oh, wait guys.. KH-RR..",
+		"What d'you mean I was heard, huh?.. KHRRR.. \n You're kidding, maaan. Go off!.. KH-RRR..",
+		"And of course don't forget: \n IF THE FARMER IS RICH - SO IS THE NATION. \n KHRRR..."
+	],
+	"rules": [
+		{"rule": "NO WOLVES", "noValues": ["wolf"]},
+		{"rule": "NO INFECTED ANIMALS", "noValues": ["infected"]},
+		{"rule": "HEALTHY FARM ANIMALS \n ARE WELCOME", "noValues": []}
+	],
+	"animals": [
+        {"name": "MERYL SHEEP", "typeName": "American Sheep", "typeId": "sheep", "iconId": "sheep2", "voice": "sheep", "footprints": "sheep",
+			"analyse":
+			[0, 1, 1, 0, 0, 0,
+			1, 0, 0, 1, 1, 0,
+			0, 0, 0, 1, 0, 1,
+			1, 1, 0, 0, 1, 0,
+			1, 0, 1, 1, 0, 1]},
+		{"name": "TITANIC SHEEP", "typeName": "Transatlantic Sheep", "typeId": "sheep", "iconId": "sheep1", "voice": "pig", "footprints": "sheep",
+			"infoVoice": "I FEEL COLD BUT I CAN SWIM THROUGH IT", "analyse":
+			[0, 0, 1, 0, 0, 0,
+			0, 0, 0, 1, 0, 0,
+			1, 0, 0, 1, 0, 1,
+			1, 1, 0, 0, 0, 0,
+			1, 1, 1, 1, 0, 0]},
+		{"name": "LITTLE PIG", "typeName": "Russian Pig", "typeId": "pig", "iconId": "pig1", "voice": "pig", "footprints": "wolf",
+			"info": "I. HATE. EUROVISION. AND COVID-19. AND YOU.", "analyse":
+			[1, 1, 1, 0, 0, 0,
+			1, 0, 0, 1, 1, 0,
+			0, 0, 0, 1, 0, 1,
+			1, 1, 0, 1, 1, 0,
+			1, 0, 1, 1, 0, 1]},
+		{"name": "LADY COWID", "typeName": "Chinese Cow", "typeId": "cow", "iconId": "cow1", "voice": "cow", "footprints": "sheep",
+			"infoFootprints":"CHINESE COWS ARE QUITE TINY Y'KNOW", "analyse":
+			[1, 0, 1, 0, 0, 0,
+			1, 1, 1, 1, 1, 0,
+			0, 0, 1, 1, 0, 1,
+			0, 1, 1, 0, 1, 0,
+			1, 0, 1, 1, 0, 1]},
+		{"name": "FINN WOLFHARD", "typeName": "Strange Pig", "typeId": "wolf", "iconId": "pig1", "voice": "pig", "footprints": "wolf", "analyse":
+		[0, 1, 1, 0, 0, 0,
+			1, 0, 0, 1, 1, 0,
+			0, 0, 0, 1, 0, 1,
+			1, 1, 0, 0, 1, 0,
+			1, 0, 1, 1, 0, 1]},
+		{"name": "ANNIE FRIENDSHEEP", "typeName": "Italian Sheep", "typeId": "sheep", "iconId": "sheep1", "voice": "pig", "footprints": "sheep",
+			"infoVoice": "HAVE YOU SEEN MY SIS? SHE'S SO FRIENDLY", "analyse":
+			[0, 0, 1, 0, 0, 0,
+			1, 0, 0, 1, 1, 1,
+			1, 0, 1, 1, 0, 1,
+			0, 0, 0, 0, 1, 0,
+			1, 0, 1, 1, 0, 1]},
+		{"name": "RUNNIE COWER", "typeName": "Killer Bull", "typeId": "cow", "iconId": "cow2", "voice": "cow", "footprints": "cow",
+			"info": "HAVE YOU LISTEN TO THE KILLERS? I CAN KILL YOU TOO", "analyse":
+			[1, 0, 1, 0, 0, 0,
+			1, 0, 0, 1, 1, 0,
+			0, 0, 0, 1, 0, 1,
+			1, 1, 0, 0, 1, 1,
+			1, 0, 1, 1, 0, 1]},
+		{"name": "GRANNY PORKER", "typeName": "NY Pig", "typeId": "pig", "iconId": "pig2", "voice": "pig", "footprints": "pig", "analyse":
+			[0, 1, 1, 0, 0, 0,
+			1, 0, 1, 1, 1, 0,
+			0, 0, 1, 1, 0, 1,
+			1, 1, 1, 0, 1, 0,
+			1, 0, 1, 1, 0, 1]},
+		{"name": "LADY HARDSHEEP", "typeName": "Belarusian Sheep", "typeId": "sheep", "iconId": "sheep1", "voice": "wolf", "footprints": "sheep",
+			"info": "I WANT TO LIVE AT YOUR FARM. PLEASE.", "analyse":
+		[0, 1, 1, 0, 0, 0,
+			1, 0, 0, 1, 1, 0,
+			0, 0, 0, 1, 0, 1,
+			1, 1, 0, 0, 1, 0,
+			1, 0, 1, 1, 0, 1]},
+		{"name": "BERNARD PIGMALION", "typeName": "English Pig", "typeId": "pig", "iconId": "pig1", "voice": "pig", "footprints": "pig", "analyse":
+		[0, 1, 1, 0, 0, 0,
+			1, 0, 0, 1, 1, 0,
+			0, 0, 0, 1, 0, 1,
+			1, 1, 0, 0, 1, 0,
+			1, 0, 1, 1, 0, 1]},
+		{"name": "JENNA BIOWOLF", "typeName": "Polish Wolf", "typeId": "wolf", "iconId": "wolf", "voice": "wolf", "footprints": "wolf", "analyse":
+		[0, 1, 1, 0, 0, 0,
+			1, 0, 0, 1, 1, 0,
+			0, 0, 0, 1, 0, 1,
+			1, 1, 0, 0, 1, 0,
+			1, 0, 1, 1, 0, 1]},
+		{"name": "KIRILL ROZHCOWSKIY", "typeName": "Nintendo Bull", "typeId": "cow", "iconId": "cow2", "voice": "cow", "footprints": "cow",
+			"info": "IF YOU DON'T HAVE NINTENDO THERE - LET ME OUT.", "analyse":
+			[1, 0, 1, 0, 0, 0,
+			1, 0, 0, 1, 1, 0,
+			0, 0, 0, 1, 0, 1,
+			1, 1, 0, 0, 1, 1,
+			0, 0, 1, 1, 0, 1]}
+	],
+	"expenses": [
+		{"name": "GET FOOD", "cost": 10}, {"name": "GET BED", "cost": 16}, {"name": "GET WATER", "cost": 20}, {"name": "GET WATER", "cost": 30}],
+	"analysTemplate": [2, 3, -4, 1, -5, -3],
+	"analysTemplateColors" : [1, 0, 1, 1, 0, 0]
+}
