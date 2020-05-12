@@ -8,6 +8,8 @@ public class GameControllerScript : MonoBehaviour
 {
     [Header("Main Settings")]
     [SerializeField]
+    private int radioScene;
+    [SerializeField]
     private int levelFinishScene;
     [SerializeField]
     private float minutesInSecond = 2;
@@ -44,6 +46,8 @@ public class GameControllerScript : MonoBehaviour
     private Text dayCounter;
     [SerializeField]
     private Text watches;
+    [SerializeField]
+    private Button callButton;
     
     [Header("Animal Window")]
     [SerializeField]
@@ -60,6 +64,10 @@ public class GameControllerScript : MonoBehaviour
     private RectTransform analyseTemplate;
     [SerializeField]
     private RectTransform rulesTemplate;
+    [SerializeField]
+    private RectTransform voiceTemplate;
+    [SerializeField]
+    private RectTransform footrpintsTemplate;
 
     [Header("Other")]
     [SerializeField]
@@ -72,9 +80,27 @@ public class GameControllerScript : MonoBehaviour
     private Image textCardPrefab;
     [SerializeField]
     private Image penaltyPrefab;
+    [SerializeField]
+    private Image overlay;
+    [SerializeField]
+    private Button analyseButton;
+
+    [Header("FirstDay")]
+    [SerializeField]
+    private RectTransform firstDayFootrpints;
+    [SerializeField]
+    private Sprite firstDayVoice;
+
+    [Header("Tutorials")]
+    [SerializeField]
+    private GameObject voiceTutorial;
+    [SerializeField]
+    private GameObject footrpintsTutorial;
+    [SerializeField]
+    private GameObject analyseTutorial;
 
     private Day currentDay;
-    private int animalCounter = 0;
+    private int animalCounter = -1;
     private bool footprintsAdded;
     private bool analyseAdded;
     private bool voiceDiagramAdded;
@@ -86,6 +112,7 @@ public class GameControllerScript : MonoBehaviour
     private bool penaltyAdded = false;
     private List<HistoryEntry> history = new List<HistoryEntry>();
 
+    private int dayEndTime = 18;
     private int h = 9;
     private int m = 0;
 
@@ -94,9 +121,11 @@ public class GameControllerScript : MonoBehaviour
         loadDay();
         setupRules(rulesTitle, rules);
         setupTopPanel();
-        setupAnimalWindow();
+        //setupAnimalWindow();
         setupAnalyseTemplate();
         setupRulesTemplate();
+
+        specialLevelSettings();
     }
 
     private void loadDay()
@@ -144,7 +173,7 @@ public class GameControllerScript : MonoBehaviour
 
     private void setupAnimalWindow()
     {
-        Animal animal = currentDay.animals[animalCounter];
+        Animal animal = getCurrentAnimal();
         animalTitle.text = string.Format("ANIMAL #{0}", animalCounter + 1);
         animalName.text = animal.name;
         animalType.text = animal.typeName;
@@ -192,7 +221,7 @@ public class GameControllerScript : MonoBehaviour
 
     private IEnumerator dayTimer()
     {
-        while (h < 10)
+        while (h < dayEndTime || currentDay.id == 1)
         {
             m += 1;
             if (m == 60)
@@ -289,7 +318,11 @@ public class GameControllerScript : MonoBehaviour
 
     public void addVoiceDiagram()
     {
-        AnimalType animalType = animalTypes.getTypeById(currentDay.animals[animalCounter].typeId);
+        if (currentDay.id == 1 && animalCounter == 0)
+        {
+            voiceTutorial.SetActive(true);
+        }
+        AnimalType animalType = animalTypes.getTypeById(getCurrentAnimal().typeId);
         VoiceDiagramGenerator voiceDiagram = Instantiate(voiceDiagramPrefab, analyseTemplate.parent);
         voiceDiagram.init(animalType.voiceMin, animalType.voiceMax, true, 2);
         voiceDiagram.generate();
@@ -302,9 +335,13 @@ public class GameControllerScript : MonoBehaviour
         if (waitNext)
             return;
 
+        if (currentDay.id == 1 && animalCounter == 0)
+        {
+            footrpintsTutorial.SetActive(true);
+        }
         if (!footprintsAdded)
         {
-            AnimalType animalType = animalTypes.getTypeById(currentDay.animals[animalCounter].footprints);
+            AnimalType animalType = animalTypes.getTypeById(getCurrentAnimal().footprints);
             Image footprint = Instantiate(footprintPrefab, analyseTemplate.parent);
             footprint.sprite = animalType.footprintsImage;
 
@@ -317,6 +354,11 @@ public class GameControllerScript : MonoBehaviour
         if (waitNext)
             return;
 
+        if (currentDay.id == 3 && animalCounter == 0)
+        {
+            analyseTutorial.SetActive(true);
+        }
+
         if (!analyseAdded)
         {
             RectTransform analyse = Instantiate(analysePrefab, analyseTemplate.parent);
@@ -324,7 +366,7 @@ public class GameControllerScript : MonoBehaviour
             {
                 //Debug.Log(currentDay.animals[animalCounter].analyse);
                 analyse.GetChild(i).GetComponent<Image>().color = 
-                    currentDay.animals[animalCounter].analyse[i] == 0 ? Color.black : Color.clear;
+                    getCurrentAnimal().analyse[i] == 0 ? Color.black : Color.clear;
             }
 
             analyseAdded = true;
@@ -334,6 +376,11 @@ public class GameControllerScript : MonoBehaviour
 
     private void addToHistory(Animal animal, string action)
     {
+        if (currentDay.id == 1 && animalCounter == 2)
+        {
+            overlay.gameObject.SetActive(true);
+            StartCoroutine(firstDayEnd());
+        }
         if (!isChoiceGood(animal, action) && !penaltyAdded)
         {
             addPenaltyCard();
@@ -406,8 +453,14 @@ public class GameControllerScript : MonoBehaviour
 
     public void nextAnimal()
     {
+        if (animalCounter == -1)
+        {
+            startDayTimer();
+        }
+
         animalCounter++;
         setupAnimalWindow();
+        specialLevelSettings();
     }
 
     public void makeRemoveable()
@@ -491,5 +544,41 @@ public class GameControllerScript : MonoBehaviour
             }
         }
         throw new System.Exception("Unhandled animal case: " + animal.name + " " + action);
+    }
+
+    public void specialLevelSettings()
+    {
+        if (currentDay.id == 1)
+        {
+            analyseTemplate.gameObject.SetActive(false);
+            analyseButton.gameObject.SetActive(false);
+            callButton.gameObject.SetActive(false);
+
+            footrpintsTemplate.gameObject.SetActive(false);
+            firstDayFootrpints.gameObject.SetActive(true);
+
+            voiceTemplate.GetComponent<Image>().sprite = firstDayVoice;
+        }
+
+        if (currentDay.id == 2)
+        {
+            analyseTemplate.gameObject.SetActive(false);
+            analyseButton.gameObject.SetActive(false);
+        }
+    }
+
+    private IEnumerator firstDayEnd()
+    {
+        overlay.gameObject.SetActive(true);
+        while (overlay.color.a < 1f)
+        {
+            Color color = overlay.color;
+            color.a += 0.01f;
+            overlay.color = color;
+            yield return new WaitForSeconds(0.01f);
+        }
+        PlayerPrefs.SetInt("dayId", 2);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene(radioScene);
     }
 }

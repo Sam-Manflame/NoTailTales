@@ -19,8 +19,7 @@ public class RadioSceneController : MonoBehaviour
     private Button startDayButton;
     [SerializeField]
     private Text dayCounter;
-
-
+    
     private PrintingTextMessage printingMessage;
     private int messageCounter;
     private Day currentDay;
@@ -31,7 +30,7 @@ public class RadioSceneController : MonoBehaviour
         printingMessage.GetComponent<Text>().text = "";
         printingMessage.onEnded = () => StartCoroutine(delayedMessage());
         messageCounter = 0;
-        currentDay = Day.load(1/*PlayerPrefs.GetInt("dayId")*/);
+        currentDay = Day.load(PlayerPrefs.GetInt("dayId"));
         dayCounter.text = "DAY #" + currentDay.id;
 
         StartCoroutine(onAir());
