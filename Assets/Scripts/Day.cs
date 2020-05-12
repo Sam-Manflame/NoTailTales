@@ -16,6 +16,10 @@ public class Day
     public int[] analysTemplate;
     public int[] analysTemplateColors;
 
+    public Expense[] expenses;
+
+    public string[] radio;
+
     public static Day load(int id)
     {
         string path = string.Format("Assets/Resources/day{0}.json", id);

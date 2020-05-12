@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class FinishSceneController : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class FinishSceneController : MonoBehaviour
     private Text title;
     [SerializeField]
     private int saveGoal = 300;
+    [SerializeField]
+    private int radioScene = 4;
 
     [Header("Achievements")]
     [SerializeField]
@@ -66,7 +69,7 @@ public class FinishSceneController : MonoBehaviour
 
     private void generateSummary()
     {
-        LevelResult levelResult = getTestResult();  //JsonUtility.FromJson<LevelResult>(PlayerPrefs.GetString("levelResult"));
+        LevelResult levelResult = getLevelResult();
 
         setLineData(sheepLine, levelResult.counts[0], levelResult.moneyChanges[0]);
         setLineData(cowsLine, levelResult.counts[1], levelResult.moneyChanges[1]);
@@ -89,9 +92,8 @@ public class FinishSceneController : MonoBehaviour
 
     private void setLineData(RectTransform line, int count, int money)
     {
-        line.GetChild(1).GetComponent<Text>().text = count == 0 ? "-" : count.ToString();
-        line.GetChild(2).GetComponent<Text>().text = money == 0 ? "-" :
-            string.Format("{0}{1}$", money > 0 ? "" : "-", Mathf.Abs(money));
+        line.GetChild(1).GetComponent<Text>().text = count.ToString();
+        line.GetChild(2).GetComponent<Text>().text = string.Format("{0}$", money);
         
         if (count == 0)
         {
@@ -112,7 +114,12 @@ public class FinishSceneController : MonoBehaviour
 
     private void generateExpenses()
     {
-        Expenses expenses = getTestExpenses();
+        Expenses expenses = getExpenses();
+        if (expenses == null)
+        {
+            expensesLines.parent.gameObject.SetActive(false);
+            return;
+        }
 
         RectTransform line = expensesLines.GetChild(0) as RectTransform;
         for (int i = 0; i < expenses.expenses.Length; i++)
@@ -162,6 +169,9 @@ public class FinishSceneController : MonoBehaviour
 
     private void updateExpenses(Expenses expenses)
     {
+        if (expenses == null)
+            return;
+
         for (int i = 0; i < expenses.expenses.Length; i++)
         {
             if (moneyEarned < expenses.cost[i])
@@ -183,7 +193,8 @@ public class FinishSceneController : MonoBehaviour
     {
         savedLine.GetComponentsInChildren<Text>()[1].text = string.Format("{0}$", PlayerPrefs.GetInt("saved"));
         savedLine.GetComponentsInChildren<Text>()[2].text = string.Format("{0}$", Mathf.Max(0, saveGoal - PlayerPrefs.GetInt("saved")));
-        saveButton.GetComponentInChildren<Text>().text = string.Format("SAVE FOR FUTURE: {0}", moneyEarned);
+        saveButton.GetComponentInChildren<Text>().text =
+            (moneyEarned >= 0 ? "SAVE FOR FUTURE: " : "PAY FINES: ") + moneyEarned + "$";
     }
 
     private void updateAchievements()
@@ -194,17 +205,45 @@ public class FinishSceneController : MonoBehaviour
     public void saveMoney()
     {
         PlayerPrefs.SetInt("saved", PlayerPrefs.GetInt("saved") + moneyEarned);
+        PlayerPrefs.Save();
         moneyEarned = 0;
-        updateExpenses(getTestExpenses());
+        updateExpenses(getExpenses());
         updateSaved();
     }
 
     public void nextDay()
     {
+        saveMoney();
 
+        // TODO save expenses
+
+        SceneManager.LoadScene(radioScene);
     }
 
-    private LevelResult getTestResult()
+    private LevelResult getLevelResult()
+    {
+        return JsonUtility.FromJson<LevelResult>(PlayerPrefs.GetString("levelResult"));
+    }
+
+    private Expenses getExpenses()
+    {
+        Day day = Day.load(PlayerPrefs.GetInt("dayId") - 1);
+
+        Expenses expenses = new Expenses();
+        if (day.expenses == null)
+            return null;
+        expenses.expenses = new string[day.expenses.Length];
+        expenses.cost = new int[day.expenses.Length];
+
+        for (int i = 0; i < day.expenses.Length; i++)
+        {
+            expenses.expenses[i] = day.expenses[i].name;
+            expenses.cost[i] = day.expenses[i].cost;
+        }
+        return expenses;
+    }
+
+    /*private LevelResult getTestResult()
     {
         LevelResult result = new LevelResult();
 
@@ -240,5 +279,5 @@ public class FinishSceneController : MonoBehaviour
         };
 
         return expenses;
-    }
+    }*/
 }

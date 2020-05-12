@@ -462,7 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f3ecc5e00959a44880f0ec66b32bc55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameScene: 1
+  radioScene: 4
   settingsScene: 2
   creditsScene: 3
 --- !u!1 &973604101

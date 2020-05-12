@@ -406,7 +406,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 0, b: 0, a: 1}
-    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 1}
+    m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -520,8 +520,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 30.8, y: -26.899994}
-  m_SizeDelta: {x: 339.9, y: 348.4}
+  m_AnchoredPosition: {x: 6.1, y: -26.84}
+  m_SizeDelta: {x: 350, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &162585044
 MonoBehaviour:
@@ -1535,10 +1535,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ed40578cacdf747ae149fe0b3ac8f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelFinishScene: 5
   minutesInSecond: 2
   animalTypes: {fileID: 1030161613}
   images: {fileID: 1154508931}
   haveNothingToSayText: I HAF NOPINK TO SAY APOUT SAT
+  wildAndGoodCost: 5
+  wolfReportedCost: 10
+  wolfAcceptedCost: 10
+  illAcceptedCost: 10
+  healthyDeniedCost: 10
   rulesTitle: {fileID: 1973972751}
   rules: {fileID: 2021030714}
   rulesButtonText: {fileID: 1936602859}
@@ -2160,8 +2166,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 4.700012, y: 0}
+  m_SizeDelta: {x: -9.5, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &959285010
 MonoBehaviour:
@@ -2497,14 +2503,22 @@ MonoBehaviour:
     voiceMin: 1
     voiceMax: 10
     footprintsImage: {fileID: 21300000, guid: 2b13c663bc073a44c9c52aa8fe491fe1, type: 3}
+    cost: 3
   - typeId: wolf
     voiceMin: 1
     voiceMax: 10
     footprintsImage: {fileID: 21300000, guid: 7677df9f8d1e35b4991dd247f15affab, type: 3}
+    cost: 0
   - typeId: cow
     voiceMin: 1
     voiceMax: 10
     footprintsImage: {fileID: 21300000, guid: 17fff29660a68ff488cd124fa60109c9, type: 3}
+    cost: 6
+  - typeId: sheep
+    voiceMin: 1
+    voiceMax: 10
+    footprintsImage: {fileID: 21300000, guid: 17fff29660a68ff488cd124fa60109c9, type: 3}
+    cost: 4
 --- !u!1 &1042951309
 GameObject:
   m_ObjectHideFlags: 0
@@ -2747,8 +2761,16 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: 5c76e1832d9a6ed48a57d314c55b04d7, type: 3}
   - imageId: wolf
     image: {fileID: 21300000, guid: ece68047a6e1f2c4e851dfb8054958d8, type: 3}
+  - imageId: pig2
+    image: {fileID: 21300000, guid: 70780f2ac9311ad47b4627c244b59913, type: 3}
+  - imageId: sheep1
+    image: {fileID: 21300000, guid: 8c74f5a6403c97c4e8ce424bd7dbfe7c, type: 3}
   - imageId: cow1
     image: {fileID: 21300000, guid: b0fbb680da601c74799477f8d279cc5c, type: 3}
+  - imageId: cow2
+    image: {fileID: 21300000, guid: 6e0b2d9480642384f8975dab9070485e, type: 3}
+  - imageId: sheep2
+    image: {fileID: 21300000, guid: 7b1065702c5aa45498362dee9933eee1, type: 3}
 --- !u!4 &1154508932
 Transform:
   m_ObjectHideFlags: 0
@@ -4944,7 +4966,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 0, b: 0, a: 1}
-    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 1}
+    m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}

@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameControllerScript : MonoBehaviour
 {
     [Header("Main Settings")]
+    [SerializeField]
+    private int levelFinishScene;
     [SerializeField]
     private float minutesInSecond = 2;
     [SerializeField]
@@ -15,7 +18,19 @@ public class GameControllerScript : MonoBehaviour
     [SerializeField]
     [Multiline]
     private string haveNothingToSayText;
-    
+
+    [Header("Special Costs")]
+    [SerializeField]
+    private int wildAndGoodCost = 5;
+    [SerializeField]
+    private int wolfReportedCost = 10;
+    [SerializeField]
+    private int wolfAcceptedCost = 10;
+    [SerializeField]
+    private int illAcceptedCost = 10;
+    [SerializeField]
+    private int healthyDeniedCost = 10;
+
     [Header("Rules Window")]
     [SerializeField]
     private Text rulesTitle;
@@ -86,13 +101,7 @@ public class GameControllerScript : MonoBehaviour
 
     private void loadDay()
     {
-        if (!PlayerPrefs.HasKey("dayId"))
-        {
-            PlayerPrefs.SetInt("dayId", 1);
-            PlayerPrefs.Save();
-        }
-
-        int dayId = PlayerPrefs.GetInt("dayId");
+        int dayId = 1; PlayerPrefs.GetInt("dayId");
         currentDay = Day.load(dayId);
     }
 
@@ -183,7 +192,7 @@ public class GameControllerScript : MonoBehaviour
 
     private IEnumerator dayTimer()
     {
-        while (h < 18)
+        while (h < 10)
         {
             m += 1;
             if (m == 60)
@@ -242,6 +251,8 @@ public class GameControllerScript : MonoBehaviour
 
     private bool isAnalyseGood(Animal animal)
     {
+        if (animal.analyse == null)
+            return true;
         for (int i = 0; i < currentDay.analysTemplate.Length; i++)
         {
             int sum =
@@ -323,12 +334,16 @@ public class GameControllerScript : MonoBehaviour
 
     private void addToHistory(Animal animal, string action)
     {
-        history.Add(new HistoryEntry(animal, action));
         if (!isChoiceGood(animal, action) && !penaltyAdded)
         {
             addPenaltyCard();
             penaltyAdded = true;
         }
+        else
+        {
+            history.Add(new HistoryEntry(animal, action));
+        }
+        
     }
 
     private bool isChoiceGood(Animal animal, string action)
@@ -409,6 +424,72 @@ public class GameControllerScript : MonoBehaviour
 
     private void endDay()
     {
+        PlayerPrefs.SetString("levelResult", JsonUtility.ToJson(generateLevelResult()));
+        PlayerPrefs.SetInt("dayId", currentDay.id + 1);
+        PlayerPrefs.Save();
 
+        SceneManager.LoadScene(levelFinishScene);
+    }
+
+    private LevelResult generateLevelResult()
+    {
+        LevelResult levelResult = new LevelResult();
+        levelResult.counts = new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
+        levelResult.moneyChanges = new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
+
+        foreach (HistoryEntry entry in history)
+        {
+            levelResult.counts[countAnimal(entry.animal, entry.action)] += 1;
+        }
+
+        levelResult.moneyChanges[0] = levelResult.counts[0] * animalTypes.getTypeById("sheep").cost;
+        levelResult.moneyChanges[1] = levelResult.counts[1] * animalTypes.getTypeById("cow").cost;
+        levelResult.moneyChanges[2] = levelResult.counts[2] * animalTypes.getTypeById("pig").cost;
+        levelResult.moneyChanges[3] = levelResult.counts[3] * wildAndGoodCost;
+        levelResult.moneyChanges[4] = levelResult.counts[4] * wolfReportedCost;
+        levelResult.moneyChanges[5] = - levelResult.counts[5] * wolfAcceptedCost;
+        levelResult.moneyChanges[6] = - levelResult.counts[6] * illAcceptedCost;
+        levelResult.moneyChanges[7] = - levelResult.counts[7] * healthyDeniedCost;
+
+        return levelResult;
+    }
+
+    private int countAnimal(Animal animal, string action)
+    {
+        bool isWolf = animal.typeId == "wolf" || animal.voice == "wolf" || animal.footprints == "wolf";
+        if (action == "call" && isWolf)
+            return 4;
+        if (action == "accept" && isWolf)
+            return 5;
+
+        foreach (Rule rule in currentDay.rules)
+        {
+            foreach (string noValue in rule.noValues)
+            {
+                if (animal.typeId.Equals(noValue) && action.Equals("accept"))
+                    return 5;
+
+                if (noValue.Equals("infected") && !isAnalyseGood(animal) && action.Equals("accept"))
+                    return 6;
+            }
+        }
+
+        if (!isWolf)
+        {
+            if (isAnalyseGood(animal) && (action.Equals("deny") || action.Equals("call")))
+                return 7;
+            switch (animal.typeId)
+            {
+                case "sheep":
+                    return 0;
+                case "cow":
+                    return 1;
+                case "pig":
+                    return 2;
+                default:
+                    return 3;
+            }
+        }
+        throw new System.Exception("Unhandled animal case: " + animal.name + " " + action);
     }
 }

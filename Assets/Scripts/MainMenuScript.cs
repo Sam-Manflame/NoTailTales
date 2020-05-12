@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour
 {
-    public int gameScene;
+    public int radioScene;
     public int settingsScene;
     public int creditsScene;
 
@@ -14,7 +14,11 @@ public class MainMenuScript : MonoBehaviour
 
     public void newGamePressed()
     {
-        SceneManager.LoadScene(gameScene);
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetInt("dayId", 1);
+        PlayerPrefs.Save();
+
+        SceneManager.LoadScene(radioScene);
     }
 
     public void settingsPressed()

@@ -12,4 +12,6 @@ public class AnimalType
     public int voiceMax = 10;
 
     public Sprite footprintsImage;
+
+    public int cost;
 }

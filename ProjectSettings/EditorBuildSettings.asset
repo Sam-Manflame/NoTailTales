@@ -17,7 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CreditsScene.unity
     guid: 977346469526dde40a4b8d9b727b2b34
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/RadioScene.unity
+    guid: 231660942e0f3614c90d720e1659852c
+  - enabled: 1
+    path: Assets/Scenes/LevelFinishScene.unity
+    guid: a75e2cdc1f7d3774e87f33fcd4078131
   m_configObjects: {}
