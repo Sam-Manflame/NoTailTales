@@ -57,7 +57,10 @@ public class VoiceDiagramGenerator : MonoBehaviour
             segmentRect.gameObject.SetActive(true);
             
            // сделано для чётного кол-ва сегментов TODO учёт нечётного
-            Vector3 segmentPosition = new Vector3((fullSegment.rect.width + segmentOffset) * (i - diagramLength / 2) + (segmentOffset + fullSegment.rect.width) / 2.0f, 0, 0);
+            Vector3 segmentPosition = new Vector3(
+                (fullSegment.rect.width + segmentOffset) * (i - diagramLength / 2) + (segmentOffset + fullSegment.rect.width) / 2.0f, 
+                fullSegment.localPosition.y + fullSegment.rect.height * (value / 10.0f) / 2,
+                fullSegment.localPosition.z);
             segmentRect.localPosition = segmentPosition;
 
             Vector3 segmentScale = segmentRect.localScale;

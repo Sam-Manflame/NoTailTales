@@ -84,6 +84,10 @@ public class GameControllerScript : MonoBehaviour
     private Image overlay;
     [SerializeField]
     private Button analyseButton;
+    [SerializeField]
+    private RectTransform appearPlace;
+    [SerializeField]
+    private RectTransform targetPlace;
 
     [Header("FirstDay")]
     [SerializeField]
@@ -306,6 +310,20 @@ public class GameControllerScript : MonoBehaviour
         return true;
     }
 
+    private IEnumerator appearRoutine(RectTransform rect)
+    {
+        if (rect.transform.GetComponent<MovableElement>() != null)
+            rect.transform.GetComponent<MovableElement>().setCanBeMoved(false);
+        rect.localPosition = appearPlace.localPosition - new Vector3(0, rect.rect.height / 2, 0);
+        while ((targetPlace.localPosition - rect.localPosition).magnitude > 0.1)
+        {
+            rect.localPosition = rect.localPosition + (targetPlace.localPosition - rect.localPosition).normalized * Time.deltaTime * 100;
+            yield return new WaitForSeconds(0.001f);
+        }
+        if (rect.transform.GetComponent<MovableElement>() != null)
+            rect.transform.GetComponent<MovableElement>().setCanBeMoved(true);
+    }
+
     private void addTextCard(string text)
     {
         if (text == null)
@@ -314,6 +332,8 @@ public class GameControllerScript : MonoBehaviour
         Image textCard = Instantiate(textCardPrefab, analyseTemplate.parent);
         textCard.GetComponentsInChildren<Text>()[0].text = string.Format("MESSAGE FROM {0}", getCurrentAnimal().name);
         textCard.GetComponentsInChildren<Text>()[1].text = text;
+        
+        StartCoroutine(appearRoutine(textCard.transform as RectTransform));
     }
 
     public void addVoiceDiagram()
@@ -326,6 +346,8 @@ public class GameControllerScript : MonoBehaviour
         VoiceDiagramGenerator voiceDiagram = Instantiate(voiceDiagramPrefab, analyseTemplate.parent);
         voiceDiagram.init(animalType.voiceMin, animalType.voiceMax, true, 2);
         voiceDiagram.generate();
+        
+        StartCoroutine(appearRoutine(voiceDiagram.transform as RectTransform));
 
         voiceDiagramAdded = true;
     }
@@ -344,6 +366,8 @@ public class GameControllerScript : MonoBehaviour
             AnimalType animalType = animalTypes.getTypeById(getCurrentAnimal().footprints);
             Image footprint = Instantiate(footprintPrefab, analyseTemplate.parent);
             footprint.sprite = animalType.footprintsImage;
+            
+            StartCoroutine(appearRoutine(footprint.transform as RectTransform));
 
             footprintsAdded = true;
         }
@@ -430,7 +454,8 @@ public class GameControllerScript : MonoBehaviour
 
     private void addPenaltyCard()
     {
-        Instantiate(penaltyPrefab, analyseTemplate.parent);
+        Image penalty = Instantiate(penaltyPrefab, analyseTemplate.parent);
+        StartCoroutine(appearRoutine(penalty.transform as RectTransform));
     }
 
     public void denyAnimal()

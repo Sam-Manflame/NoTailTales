@@ -17,8 +17,13 @@ public class MovableElement : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
     private float moveSpeed = 110f;
 
+    private bool canBeMoved = true;
+
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (!canBeMoved)
+            return;
+
         move = true;
         prevPos.Set(eventData.position.x, eventData.position.y);
         //Debug.Log(eventData.position);
@@ -91,5 +96,10 @@ public class MovableElement : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     private void remove()
     {
         Destroy(gameObject);
+    }
+
+    public void setCanBeMoved(bool val)
+    {
+        canBeMoved = val;
     }
 }
