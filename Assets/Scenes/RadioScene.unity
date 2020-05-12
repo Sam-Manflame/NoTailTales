@@ -661,8 +661,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -316.98}
-  m_SizeDelta: {x: 1198.5, y: 155.15}
+  m_AnchoredPosition: {x: 10.3, y: -271.5}
+  m_SizeDelta: {x: 1682.7, y: 246.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &939195135
 MonoBehaviour:
@@ -696,7 +696,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: HELLO, HELLO, HELLO, DEER FRIENDS! WE GOT BAD NEWS FOR YA! ALL FORESTS
-    ARE ON FIRE!!!
+    ARE ON FIRE!!! DFSFSDFSDFDSFSDFSDFDSFDSF
 --- !u!222 &939195136
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -718,6 +718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   symbolDelta: 0.1
+  activated: 0
 --- !u!1 &1407764506
 GameObject:
   m_ObjectHideFlags: 0

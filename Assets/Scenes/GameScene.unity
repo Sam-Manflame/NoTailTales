@@ -5730,8 +5730,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2021030713}
   - component: {fileID: 2021030715}
-  - component: {fileID: 2021030716}
   - component: {fileID: 2021030714}
+  - component: {fileID: 2021030716}
   m_Layer: 5
   m_Name: Rules
   m_TagString: Untagged
@@ -5814,7 +5814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad1b23c15b08f644a857101169e38788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  symbolDelta: 0.2
+  symbolDelta: 0.15
   activated: 0
 --- !u!1 &2067202623
 GameObject:

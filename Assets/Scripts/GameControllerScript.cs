@@ -154,7 +154,9 @@ public class GameControllerScript : MonoBehaviour
         {
             rules.text += "- " + rule + (rulesStrings.IndexOf(rule) != rulesStrings.Count - 1 ? "\n" : "");
         }
-        rules.GetComponent<PrintingTextMessage>().setMessage(rules.text);
+
+        if (rules.GetComponent<PrintingTextMessage>() != null)
+            rules.GetComponent<PrintingTextMessage>().setMessage(rules.text);
     }
     
 
@@ -215,7 +217,7 @@ public class GameControllerScript : MonoBehaviour
     {
         Text templateTitle = rulesTemplate.GetChild(0).GetComponent<Text>();
         Text templateRules = rulesTemplate.GetChild(1).GetComponent<Text>();
-
+        
         setupRules(templateTitle, templateRules);
     }
 

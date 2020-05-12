@@ -32,7 +32,8 @@ public class PrintingTextMessage : MonoBehaviour
             lastSymbolTime = Time.time;
             if (ended())
             {
-                onEnded();
+                if (onEnded != null)
+                    onEnded();
             }
         }
     }
