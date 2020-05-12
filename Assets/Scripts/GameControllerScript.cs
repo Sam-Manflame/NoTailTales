@@ -134,7 +134,7 @@ public class GameControllerScript : MonoBehaviour
 
     private void loadDay()
     {
-        int dayId = 1; PlayerPrefs.GetInt("dayId");
+        int dayId = PlayerPrefs.GetInt("dayId");
         currentDay = Day.load(dayId);
     }
 
@@ -520,7 +520,9 @@ public class GameControllerScript : MonoBehaviour
 
         foreach (HistoryEntry entry in history)
         {
-            levelResult.counts[countAnimal(entry.animal, entry.action)] += 1;
+            int type = countAnimal(entry.animal, entry.action);
+            if (type >= 0 && type < levelResult.counts.Length)
+                levelResult.counts[type] += 1;
         }
 
         levelResult.moneyChanges[0] = levelResult.counts[0] * animalTypes.getTypeById("sheep").cost;
@@ -571,7 +573,8 @@ public class GameControllerScript : MonoBehaviour
                     return 3;
             }
         }
-        throw new System.Exception("Unhandled animal case: " + animal.name + " " + action);
+        return -1;
+        //throw new System.Exception("Unhandled animal case: " + animal.name + " " + action);
     }
 
     public void specialLevelSettings()
