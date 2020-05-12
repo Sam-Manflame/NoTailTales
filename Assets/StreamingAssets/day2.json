@@ -1,0 +1,41 @@
+{
+	"id": 2,
+    "radio": [
+      "KHRRR.. \n Does THIS FUCKING RADIO WORK?? \n STUPID!! KHR..", "GUYS. I HAVE BAD NEWS. \n PLEASE, DON'T WORRY AND DON'T KHRR.. LEAVE.",
+      "FOREST FIRES HAVE TOTALLY.. KH-KHRRR.. COVERED AUSTRAMBLIA. \n LONG AGO, MAYBE A COUPLE OF MONTHS..",
+      "WE DIDN'T KNOW ANYTHING BECAUSE OF THIS FUCKING.. KHRRR.. OLD RADIO. \n LET IT BURN!! KH-KHRRR...",
+      "NOW WILDFIRES HAVE COME TOO CLOSE.. KHRR.. TO THE FARM AND TO US. \n FORESTS ARE ON FIRE, ANIMALS RUN AWAY, TERRIFIED. KHRRR..",
+      "YET, WE MUST NOT ESCAPE. WE MUST NOT LEAVE.. KH-KHRR.. THE FARM. \n LOCAL FIREMEN DO THEIR JOB. WE MUST DO KHRRR... OURS TOO.",
+      "WE SHOULD SAVE ANIMALS FROM.. KHRR... DEATH. \n GET ALL THE FARM ANIMALS INSIDE.. KHRRR..., BEWARE OF WOLVES \n AND BLESS YOU ALL.",
+      "PLEASE, DON'T FORGET.. KH-KHRRR.. : \n IF THE FARMER IS RICH - SO IS THE NATION. \n KHRRRR..."
+    ],
+    "rules": [
+      {"rule": "NO WOLVES. \n CALL TO REPORT THEM", "noValues": ["wolf"]},
+      {"rule": "FARM ANIMALS \n ARE WELCOME", "noValues": []},
+      {"rule": "INTERACT WITH \n ANIMALS WITH \n DISCREPANCIES", "noValues": []}
+    ],
+	"animals": [
+      {"name": "LADY COWID", "typeName": "Chinese Cow", "typeId": "cow", "iconId": "cow1", "voice": "cow", "footprints": "cow"},
+      {"name": "ALBERT WOLFENSTEIN", "typeName": "German Wolf", "typeId": "wolf", "iconId": "wolf", "voice": "wolf", "footprints": "wolf"},
+      {"name": "PETER PORKER", "typeName": "NY Pig", "typeId": "pig", "iconId": "pig1", "voice": "wolf", "footprints": "pig"},
+      {"name": "LAURA PIGPALMER", "typeName": "Lazy Pig", "typeId": "wolf", "iconId": "pig2", "voice": "pig", "footprints": "wolf",
+        "infoFootprints": "I FEEL I'LL BE DEAD SOON, PLEASE SAVE ME"},
+      {"name": "KYLE COWLACHLAN", "typeName": "Red Bull", "typeId": "cow", "iconId": "cow2", "voice": "cow", "footprints": "cow",
+        "info": "HAVE YOU SEEN LAURA PIGPALMER? PLEASE NAVIGATE ME TO HER"},
+      {"name": "DIANA FRIENDSHEEP", "typeName": "Italian Sheep", "typeId": "sheep", "iconId": "sheep1", "voice": "pig", "footprints": "sheep",
+        "infoVoice": "AND I SAY HEY, LET'S BE FRIENDS"},
+      {"name": "BERNARD PIGMALION", "typeName": "English Pig", "typeId": "pig", "iconId": "pig1", "voice": "pig", "footprints": "pig"},
+      {"name": "WOLFGANG MOZART", "typeName": "Austrian Wolf", "typeId": "wolf", "iconId": "wolf", "voice": "pig", "footprints": "wolf",
+        "infoVoice": "I HAD TO FINISH THE 9TH SYMPHONY. I HEARD YOU HAVE A PIANO"},
+      {"name": "ED SHEEPRAN", "typeName": "London Sheep", "typeId": "sheep", "iconId": "sheep2", "voice": "cow", "footprints": "sheep",
+        "infoVoice": "I'M IN LOVE WITH THE SHEEP OF YOUUU"},
+      {"name": "QUENTIN COWBOY", "typeName": "Violent Bull", "typeId": "cow", "iconId": "cow2", "voice": "cow", "footprints": "cow"},
+      {"name": "NICCOLO PIGANINI", "typeName": "Italian Royal Pig", "typeId": "pig", "iconId": "pig2", "voice": "wolf", "footprints": "pig",
+        "infoVoice": "WHEN YOU PLAY VIOLIN, NO ONE PAYS ATTENTION TO YOUR VOICE"}
+	],
+    "expenses": [
+        {"name": "GET FOOD", "cost": 10}, {"name": "GET BED", "cost": 16}, {"name": "GET WATER", "cost": 20}, {"name": "GET WATER", "cost": 30}],
+	"analysTemplate": [2, 3, -4, 1, -5, -3],
+	"analysTemplateColors" : [1, 0, 1, 1, 0, 0]
+}
+

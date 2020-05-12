@@ -22,7 +22,7 @@ public class Day
 
     public static Day load(int id)
     {
-        string path = string.Format("Assets/Resources/day{0}.json", id);
+        string path = string.Format(Application.streamingAssetsPath + "\\day{0}.json", id);
 
         StreamReader reader = new StreamReader(path);
         string jsonData = reader.ReadToEnd();
