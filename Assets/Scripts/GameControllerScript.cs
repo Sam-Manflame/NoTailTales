@@ -123,6 +123,13 @@ public class GameControllerScript : MonoBehaviour
     void Start()
     {
         loadDay();
+
+        if (currentDay.id == 1)
+        {
+            voiceTutorial.SetActive(true);
+            footrpintsTutorial.SetActive(true);
+        }
+
         setupRules(rulesTitle, rules);
         setupTopPanel();
         //setupAnimalWindow();
@@ -341,10 +348,7 @@ public class GameControllerScript : MonoBehaviour
 
     public void addVoiceDiagram()
     {
-        if (currentDay.id == 1 && animalCounter == 0)
-        {
-            voiceTutorial.SetActive(true);
-        }
+        
         AnimalType animalType = animalTypes.getTypeById(getCurrentAnimal().typeId);
         VoiceDiagramGenerator voiceDiagram = Instantiate(voiceDiagramPrefab, analyseTemplate.parent);
         voiceDiagram.init(animalType.voiceMin, animalType.voiceMax, true, 2);
@@ -359,11 +363,7 @@ public class GameControllerScript : MonoBehaviour
     {
         if (waitNext)
             return;
-
-        if (currentDay.id == 1 && animalCounter == 0)
-        {
-            footrpintsTutorial.SetActive(true);
-        }
+        
         if (!footprintsAdded)
         {
             AnimalType animalType = animalTypes.getTypeById(getCurrentAnimal().footprints);
