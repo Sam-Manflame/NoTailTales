@@ -154,6 +154,7 @@ public class GameControllerScript : MonoBehaviour
         {
             rules.text += "- " + rule + (rulesStrings.IndexOf(rule) != rulesStrings.Count - 1 ? "\n" : "");
         }
+        rules.GetComponent<PrintingTextMessage>().setMessage(rules.text);
     }
     
 

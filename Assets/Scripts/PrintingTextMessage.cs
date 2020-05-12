@@ -11,6 +11,7 @@ public class PrintingTextMessage : MonoBehaviour
     private float symbolDelta = 0.05f;
     private float lastSymbolTime = 0f;
 
+    [SerializeField]
     private bool activated = false;
 
     private Text text;
