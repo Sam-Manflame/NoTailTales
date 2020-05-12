@@ -318,7 +318,7 @@ public class GameControllerScript : MonoBehaviour
         if (rect.transform.GetComponent<MovableElement>() != null)
             rect.transform.GetComponent<MovableElement>().setCanBeMoved(false);
         rect.localPosition = appearPlace.localPosition - new Vector3(0, rect.rect.height / 2, 0);
-        while ((targetPlace.localPosition - rect.localPosition).magnitude > 0.1)
+        while ((targetPlace.localPosition - rect.localPosition).magnitude > 1)
         {
             rect.localPosition = rect.localPosition + (targetPlace.localPosition - rect.localPosition).normalized * Time.deltaTime * 100;
             yield return new WaitForSeconds(0.001f);
