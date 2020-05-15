@@ -21,6 +21,12 @@ public class GameControllerScript : MonoBehaviour
     [Multiline]
     private string haveNothingToSayText;
 
+    [Header("Systems")]
+    [SerializeField]
+    private SpawnSystem spawnSystem;
+    [SerializeField]
+    private AnalyseSystem analyseSystem;
+
     [Header("Special Costs")]
     [SerializeField]
     private int wildAndGoodCost = 5;
@@ -33,14 +39,12 @@ public class GameControllerScript : MonoBehaviour
     [SerializeField]
     private int healthyDeniedCost = 10;
 
-    [Header("Rules Window")]
+    [Header("Rules")]
     [SerializeField]
-    private Text rulesTitle;
+    private RulesSetup rulesWindow;
     [SerializeField]
-    private Text rules;
-    [SerializeField]
-    private Text rulesButtonText;
-    
+    private RulesSetup rulesTemplate;
+
     [Header("Top Panel")]
     [SerializeField]
     private Text dayCounter;
@@ -61,10 +65,6 @@ public class GameControllerScript : MonoBehaviour
 
     [Header("Templates")]
     [SerializeField]
-    private RectTransform analyseTemplate;
-    [SerializeField]
-    private RectTransform rulesTemplate;
-    [SerializeField]
     private RectTransform voiceTemplate;
     [SerializeField]
     private RectTransform footrpintsTemplate;
@@ -75,8 +75,6 @@ public class GameControllerScript : MonoBehaviour
     [SerializeField]
     private Image footprintPrefab;
     [SerializeField]
-    private RectTransform analysePrefab;
-    [SerializeField]
     private Image textCardPrefab;
     [SerializeField]
     private Image penaltyPrefab;
@@ -84,10 +82,7 @@ public class GameControllerScript : MonoBehaviour
     private Image overlay;
     [SerializeField]
     private Button analyseButton;
-    [SerializeField]
-    private RectTransform appearPlace;
-    [SerializeField]
-    private RectTransform targetPlace;
+    
 
     [Header("FirstDay")]
     [SerializeField]
@@ -130,18 +125,18 @@ public class GameControllerScript : MonoBehaviour
             footrpintsTutorial.SetActive(true);
         }
 
-        setupRules(rulesTitle, rules);
+        rulesWindow.setup(currentDay.id, getRules());
+        rulesTemplate.setup(currentDay.id, getRules());
         setupTopPanel();
-        //setupAnimalWindow();
-        setupAnalyseTemplate();
-        setupRulesTemplate();
 
+        analyseSystem.setupAnalyseTemplate(currentDay.analysTemplate, currentDay.analysTemplateColors);
+        
         specialLevelSettings();
     }
 
     private void loadDay()
     {
-        int dayId = PlayerPrefs.GetInt("dayId");
+        int dayId = 3;  PlayerPrefs.GetInt("dayId");
         currentDay = Day.load(dayId);
     }
 
@@ -149,23 +144,6 @@ public class GameControllerScript : MonoBehaviour
     {
         return currentDay.animals[animalCounter];
     }
-
-    private void setupRules(Text title, Text rules)
-    {
-        title.text = string.Format("RULESET: DAY #{0}", currentDay.id);
-
-        rules.text = "";
-
-        List<string> rulesStrings = getRules();
-        foreach (string rule in rulesStrings)
-        {
-            rules.text += "- " + rule + (rulesStrings.IndexOf(rule) != rulesStrings.Count - 1 ? "\n" : "");
-        }
-
-        if (rules.GetComponent<PrintingTextMessage>() != null)
-            rules.GetComponent<PrintingTextMessage>().setMessage(rules.text);
-    }
-    
 
     private List<string> getRules()
     {
@@ -203,29 +181,6 @@ public class GameControllerScript : MonoBehaviour
         footprintsCardAdded = false;
         infoCardAdded = false;
         voiceCardAdded = false;
-    }
-    
-    private void setupAnalyseTemplate()
-    {
-        for (int i = 0; i < analyseTemplate.childCount; i++)
-        {
-            Image slot = analyseTemplate.GetChild(i).GetComponent<Image>();
-            slot.color = currentDay.analysTemplateColors[i] == 0 ? Color.black : Color.clear;
-            Text slotText = slot.transform.GetChild(0).GetComponent<Text>();
-            slotText.color = currentDay.analysTemplateColors[i] == 0 ? Color.white : Color.black;
-            slotText.text = string.Format(
-                "{0}{1}",
-                Mathf.Abs(currentDay.analysTemplate[i]),
-                currentDay.analysTemplate[i] > 0 ? "+" : "-");
-        }
-    }
-
-    private void setupRulesTemplate()
-    {
-        Text templateTitle = rulesTemplate.GetChild(0).GetComponent<Text>();
-        Text templateRules = rulesTemplate.GetChild(1).GetComponent<Text>();
-        
-        setupRules(templateTitle, templateRules);
     }
 
     public void startDayTimer()
@@ -281,7 +236,7 @@ public class GameControllerScript : MonoBehaviour
             addTextCard(getCurrentAnimal().infoFootprints);
             footprintsCardAdded = true;
         } else
-        if (!analyseCardAdded && analyseAdded && !isAnalyseGood(getCurrentAnimal()) && getCurrentAnimal().infoAnalyse != null)
+        if (!analyseCardAdded && analyseAdded && !analyseSystem.isAnalyseGood(getCurrentAnimal()) && getCurrentAnimal().infoAnalyse != null)
         {
             addTextCard(getCurrentAnimal().infoAnalyse);
             analyseCardAdded = true;
@@ -292,69 +247,23 @@ public class GameControllerScript : MonoBehaviour
         }
     }
 
-    private bool isAnalyseGood(Animal animal)
-    {
-        if (animal.analyse == null)
-            return true;
-        for (int i = 0; i < currentDay.analysTemplate.Length; i++)
-        {
-            int sum =
-                animal.analyse[i] +
-                animal.analyse[i + 6] +
-                animal.analyse[i + 12] +
-                animal.analyse[i + 18] +
-                animal.analyse[i + 24];
-
-            if (currentDay.analysTemplateColors[i] == 0)
-            {
-                sum = 5 - sum;
-            }
-
-            if (currentDay.analysTemplate[i] > 0 && sum >= currentDay.analysTemplate[i])
-                continue;
-            else if (currentDay.analysTemplate[i] < 0 && sum <= Mathf.Abs(currentDay.analysTemplate[i]))
-                continue;
-            else
-                return false;
-        }
-        return true;
-    }
-
-    private IEnumerator appearRoutine(RectTransform rect)
-    {
-        if (rect.transform.GetComponent<MovableElement>() != null)
-            rect.transform.GetComponent<MovableElement>().setCanBeMoved(false);
-        rect.localPosition = appearPlace.localPosition - new Vector3(0, rect.rect.height / 2, 0);
-        while ((targetPlace.localPosition - rect.localPosition).magnitude > 1)
-        {
-            rect.localPosition = rect.localPosition + (targetPlace.localPosition - rect.localPosition).normalized * Time.deltaTime * 100;
-            yield return new WaitForSeconds(0.001f);
-        }
-        if (rect.transform.GetComponent<MovableElement>() != null)
-            rect.transform.GetComponent<MovableElement>().setCanBeMoved(true);
-    }
-
     private void addTextCard(string text)
     {
         if (text == null)
             return;
 
-        Image textCard = Instantiate(textCardPrefab, analyseTemplate.parent);
+        Image textCard = spawnSystem.spawnPrefab(textCardPrefab.GetComponent<RectTransform>()).GetComponent<Image>();
         textCard.GetComponentsInChildren<Text>()[0].text = string.Format("MESSAGE FROM {0}", getCurrentAnimal().name);
         textCard.GetComponentsInChildren<Text>()[1].text = text;
-        
-        StartCoroutine(appearRoutine(textCard.transform as RectTransform));
     }
 
     public void addVoiceDiagram()
     {
-        
         AnimalType animalType = animalTypes.getTypeById(getCurrentAnimal().typeId);
-        VoiceDiagramGenerator voiceDiagram = Instantiate(voiceDiagramPrefab, analyseTemplate.parent);
+
+        VoiceDiagramGenerator voiceDiagram = spawnSystem.spawnPrefab(voiceDiagramPrefab.GetComponent<RectTransform>()).GetComponent<VoiceDiagramGenerator>();
         voiceDiagram.init(animalType.voiceMin, animalType.voiceMax, true, 2);
         voiceDiagram.generate();
-        
-        StartCoroutine(appearRoutine(voiceDiagram.transform as RectTransform));
 
         voiceDiagramAdded = true;
     }
@@ -367,11 +276,10 @@ public class GameControllerScript : MonoBehaviour
         if (!footprintsAdded)
         {
             AnimalType animalType = animalTypes.getTypeById(getCurrentAnimal().footprints);
-            Image footprint = Instantiate(footprintPrefab, analyseTemplate.parent);
+
+            Image footprint = spawnSystem.spawnPrefab(footprintPrefab.GetComponent<RectTransform>()).GetComponent<Image>();
             footprint.sprite = animalType.footprintsImage;
             
-            StartCoroutine(appearRoutine(footprint.transform as RectTransform));
-
             footprintsAdded = true;
         }
     }
@@ -381,23 +289,15 @@ public class GameControllerScript : MonoBehaviour
         if (waitNext)
             return;
 
-        if (currentDay.id == 3 && animalCounter == 0)
+        //if (currentDay.id == 3 && animalCounter == 0)
         {
-            analyseTutorial.SetActive(true);
+            //analyseTutorial.SetActive(true);
         }
 
         if (!analyseAdded)
         {
-            RectTransform analyse = Instantiate(analysePrefab, analyseTemplate.parent);
-            for (int i = 0; i < analyse.childCount; i++)
-            {
-                //Debug.Log(currentDay.animals[animalCounter].analyse);
-                analyse.GetChild(i).GetComponent<Image>().color = 
-                    getCurrentAnimal().analyse[i] == 0 ? Color.black : Color.clear;
-            }
-
+            analyseSystem.addAnalyse(getCurrentAnimal().analyse);
             analyseAdded = true;
-            //Debug.Log(isAnalyseGood());
         }
     }
 
@@ -417,7 +317,6 @@ public class GameControllerScript : MonoBehaviour
         {
             history.Add(new HistoryEntry(animal, action));
         }
-        
     }
 
     private bool isChoiceGood(Animal animal, string action)
@@ -437,9 +336,9 @@ public class GameControllerScript : MonoBehaviour
                 else if (animal.typeId.Equals(noValue) && action.Equals("deny"))
                     return true;
 
-                if (noValue.Equals("infected") && !isAnalyseGood(animal) && action.Equals("accept"))
+                if (noValue.Equals("infected") && !analyseSystem.isAnalyseGood(animal) && action.Equals("accept"))
                     return false;
-                else if (noValue.Equals("infected") && !isAnalyseGood(animal) && action.Equals("deny"))
+                else if (noValue.Equals("infected") && !analyseSystem.isAnalyseGood(animal) && action.Equals("deny"))
                     return true;
             }
         }
@@ -457,8 +356,7 @@ public class GameControllerScript : MonoBehaviour
 
     private void addPenaltyCard()
     {
-        Image penalty = Instantiate(penaltyPrefab, analyseTemplate.parent);
-        StartCoroutine(appearRoutine(penalty.transform as RectTransform));
+        spawnSystem.spawnPrefab(penaltyPrefab.GetComponent<RectTransform>());
     }
 
     public void denyAnimal()
@@ -552,14 +450,14 @@ public class GameControllerScript : MonoBehaviour
                 if (animal.typeId.Equals(noValue) && action.Equals("accept"))
                     return 5;
 
-                if (noValue.Equals("infected") && !isAnalyseGood(animal) && action.Equals("accept"))
+                if (noValue.Equals("infected") && !analyseSystem.isAnalyseGood(animal) && action.Equals("accept"))
                     return 6;
             }
         }
 
         if (!isWolf)
         {
-            if (isAnalyseGood(animal) && (action.Equals("deny") || action.Equals("call")))
+            if (analyseSystem.isAnalyseGood(animal) && (action.Equals("deny") || action.Equals("call")))
                 return 7;
             switch (animal.typeId)
             {
@@ -581,7 +479,7 @@ public class GameControllerScript : MonoBehaviour
     {
         if (currentDay.id == 1)
         {
-            analyseTemplate.gameObject.SetActive(false);
+            //analyseTemplate.gameObject.SetActive(false);
             analyseButton.gameObject.SetActive(false);
             callButton.gameObject.SetActive(false);
 
@@ -593,7 +491,7 @@ public class GameControllerScript : MonoBehaviour
 
         if (currentDay.id == 2)
         {
-            analyseTemplate.gameObject.SetActive(false);
+            //analyseTemplate.gameObject.SetActive(false);
             analyseButton.gameObject.SetActive(false);
         }
     }

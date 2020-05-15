@@ -1661,14 +1661,15 @@ MonoBehaviour:
   animalTypes: {fileID: 1030161613}
   images: {fileID: 1154508931}
   haveNothingToSayText: I HAF NOFIN TO SAY ABAUT ZAT
+  spawnSystem: {fileID: 1764173418}
+  analyseSystem: {fileID: 566652835}
   wildAndGoodCost: 5
   wolfReportedCost: 2
   wolfAcceptedCost: 10
   illAcceptedCost: 6
   healthyDeniedCost: 4
-  rulesTitle: {fileID: 1973972751}
-  rules: {fileID: 2021030714}
-  rulesButtonText: {fileID: 1936602859}
+  rulesWindow: {fileID: 711641319}
+  rulesTemplate: {fileID: 1485419730}
   dayCounter: {fileID: 2014435951}
   watches: {fileID: 1492795676}
   callButton: {fileID: 1685001019}
@@ -1676,15 +1677,12 @@ MonoBehaviour:
   animalName: {fileID: 1540488030}
   animalType: {fileID: 243842515}
   animalImage: {fileID: 162585044}
-  analyseTemplate: {fileID: 2117806426}
-  rulesTemplate: {fileID: 1485419726}
   voiceTemplate: {fileID: 1383966815}
   footrpintsTemplate: {fileID: 475008608}
+  movableArea: {fileID: 243302284}
   voiceDiagramPrefab: {fileID: 7417849898849403581, guid: 31e6b443ef0ff1c4d893f70fc619ca93,
     type: 3}
   footprintPrefab: {fileID: 1729687901795385797, guid: e9345cb82b34896469a7419bf6bb14cd,
-    type: 3}
-  analysePrefab: {fileID: 4891303221333094453, guid: d14222f301b6418428ae706013f18c20,
     type: 3}
   textCardPrefab: {fileID: 1155345807655680999, guid: b04c553f09a99c54eb5843fbb398ffdb,
     type: 3}
@@ -1692,8 +1690,6 @@ MonoBehaviour:
     type: 3}
   overlay: {fileID: 1670788874}
   analyseButton: {fileID: 399878601}
-  appearPlace: {fileID: 2112868117}
-  targetPlace: {fileID: 512267546}
   firstDayFootrpints: {fileID: 1531522208}
   firstDayVoice: {fileID: 21300000, guid: 563e61c9793021745905b37bf4ac0654, type: 3}
   voiceTutorial: {fileID: 547781716}
@@ -1994,6 +1990,53 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3365858112790839922}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &566652833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 566652834}
+  - component: {fileID: 566652835}
+  m_Layer: 0
+  m_Name: AnalyseSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &566652834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566652833}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.19696541, y: -0.036478333, z: 26.09961}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &566652835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566652833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270432eec3e932747a5c2b5d3894cb5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  analyseTemplate: {fileID: 2117806426}
+  analysePrefab: {fileID: 5196912300186983404, guid: d14222f301b6418428ae706013f18c20,
+    type: 3}
+  spawnSystem: {fileID: 1764173418}
 --- !u!1 &588172158
 GameObject:
   m_ObjectHideFlags: 0
@@ -2080,6 +2123,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 711641316}
+  - component: {fileID: 711641319}
   - component: {fileID: 711641318}
   - component: {fileID: 711641317}
   m_Layer: 5
@@ -2147,6 +2191,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711641315}
   m_CullTransparentMesh: 0
+--- !u!114 &711641319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711641315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0adfbe4ab66fb1e4f9f59b97f3b883f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleText: {fileID: 1973972751}
+  rulesText: {fileID: 2021030714}
+  dayCounterString: 'RULESET: DAY #{0}'
 --- !u!1 &733602520
 GameObject:
   m_ObjectHideFlags: 0
@@ -3545,8 +3604,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 31.1, y: -76.107}
-  m_SizeDelta: {x: 491.3, y: 354.39}
+  m_AnchoredPosition: {x: 14.7, y: -76.107}
+  m_SizeDelta: {x: 524, y: 354.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1167767606
 MonoBehaviour:
@@ -3568,10 +3627,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: f057c1aa4c8781f479fe1f705daa89e2, type: 3}
-    m_FontSize: 55
+    m_FontSize: 45
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 5
+    m_MinSize: 4
     m_MaxSize: 84
     m_Alignment: 3
     m_AlignByGeometry: 0
@@ -3979,6 +4038,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1485419726}
+  - component: {fileID: 1485419730}
   - component: {fileID: 1485419729}
   - component: {fileID: 1485419728}
   - component: {fileID: 1485419727}
@@ -4060,6 +4120,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1485419725}
   m_CullTransparentMesh: 0
+--- !u!114 &1485419730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485419725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0adfbe4ab66fb1e4f9f59b97f3b883f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleText: {fileID: 733602522}
+  rulesText: {fileID: 1167767606}
+  dayCounterString: 'RULESET: DAY #{0}'
 --- !u!1 &1492795674
 GameObject:
   m_ObjectHideFlags: 0
@@ -4846,6 +4921,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1685001017}
   m_CullTransparentMesh: 0
+--- !u!1 &1764173417
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1764173419}
+  - component: {fileID: 1764173418}
+  m_Layer: 0
+  m_Name: SpawnSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1764173418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764173417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bf662a0e1edcf3489263076faace6e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movableArea: {fileID: 243302284}
+  appearPlace: {fileID: 2112868117}
+  targetPlace: {fileID: 512267546}
+--- !u!4 &1764173419
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764173417}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.19696541, y: -0.036478333, z: 26.09961}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1781068492
 GameObject:
   m_ObjectHideFlags: 0
@@ -5755,8 +5876,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 74.35, y: 63}
-  m_SizeDelta: {x: 556.9, y: 562.2}
+  m_AnchoredPosition: {x: 35.7, y: 0.0000038146973}
+  m_SizeDelta: {x: 634.1, y: 562.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2021030714
 MonoBehaviour:
