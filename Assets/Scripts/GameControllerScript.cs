@@ -27,6 +27,12 @@ public class GameControllerScript : MonoBehaviour
     [SerializeField]
     private AnalyseSystem analyseSystem;
 
+    [Header("Audio")]
+    [SerializeField]
+    private AudioSource mainAudioSource;
+    [SerializeField]
+    private AudioClip animalSpeakSound;
+
     [Header("Special Costs")]
     [SerializeField]
     private int wildAndGoodCost = 5;
@@ -259,6 +265,9 @@ public class GameControllerScript : MonoBehaviour
 
     public void addVoiceDiagram()
     {
+        mainAudioSource.clip = animalSpeakSound;
+        mainAudioSource.Play();
+
         AnimalType animalType = animalTypes.getTypeById(getCurrentAnimal().typeId);
 
         VoiceDiagramGenerator voiceDiagram = spawnSystem.spawnPrefab(voiceDiagramPrefab.GetComponent<RectTransform>()).GetComponent<VoiceDiagramGenerator>();
