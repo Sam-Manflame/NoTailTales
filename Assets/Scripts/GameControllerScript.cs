@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GameControllerScript : MonoBehaviour
+public class GameControllerScript : MonoBehaviour, IGameListener
 {
     [Header("Main Settings")]
     [SerializeField]
@@ -26,12 +26,10 @@ public class GameControllerScript : MonoBehaviour
     private SpawnSystem spawnSystem;
     [SerializeField]
     private AnalyseSystem analyseSystem;
-
-    [Header("Audio")]
     [SerializeField]
-    private AudioSource mainAudioSource;
+    private VoiceSystem voiceSystem;
     [SerializeField]
-    private AudioClip animalSpeakSound;
+    private FootprintsSystem footprintsSystem;
 
     [Header("Special Costs")]
     [SerializeField]
@@ -45,11 +43,13 @@ public class GameControllerScript : MonoBehaviour
     [SerializeField]
     private int healthyDeniedCost = 10;
 
-    [Header("Rules")]
+    [Header("UI Elements")]
     [SerializeField]
     private RulesSetup rulesWindow;
     [SerializeField]
     private RulesSetup rulesTemplate;
+    [SerializeField]
+    private AnimalWindowSetup animalWindowSetup;
 
     [Header("Top Panel")]
     [SerializeField]
@@ -59,42 +59,13 @@ public class GameControllerScript : MonoBehaviour
     [SerializeField]
     private Button callButton;
     
-    [Header("Animal Window")]
-    [SerializeField]
-    private Text animalTitle;
-    [SerializeField]
-    private Text animalName;
-    [SerializeField]
-    private Text animalType;
-    [SerializeField]
-    private Image animalImage;
-
-    [Header("Templates")]
-    [SerializeField]
-    private RectTransform voiceTemplate;
-    [SerializeField]
-    private RectTransform footrpintsTemplate;
-
     [Header("Other")]
-    [SerializeField]
-    private VoiceDiagramGenerator voiceDiagramPrefab;
-    [SerializeField]
-    private Image footprintPrefab;
     [SerializeField]
     private Image textCardPrefab;
     [SerializeField]
     private Image penaltyPrefab;
     [SerializeField]
     private Image overlay;
-    [SerializeField]
-    private Button analyseButton;
-    
-
-    [Header("FirstDay")]
-    [SerializeField]
-    private RectTransform firstDayFootrpints;
-    [SerializeField]
-    private Sprite firstDayVoice;
 
     [Header("Tutorials")]
     [SerializeField]
@@ -104,25 +75,28 @@ public class GameControllerScript : MonoBehaviour
     [SerializeField]
     private GameObject analyseTutorial;
 
+    private List<IGameListener> listeners = new List<IGameListener>();
+
     private Day currentDay;
     private int animalCounter = -1;
-    private bool footprintsAdded;
-    private bool analyseAdded;
-    private bool voiceDiagramAdded;
+    private List<HistoryEntry> history = new List<HistoryEntry>();
+    
     private bool infoCardAdded;
     private bool voiceCardAdded;
     private bool footprintsCardAdded;
     private bool analyseCardAdded;
-    private bool waitNext;
     private bool penaltyAdded = false;
-    private List<HistoryEntry> history = new List<HistoryEntry>();
-
+    
     private int dayEndTime = 18;
     private int h = 9;
     private int m = 0;
 
     void Start()
     {
+        listeners.Add(analyseSystem);
+        listeners.Add(voiceSystem);
+        listeners.Add(footprintsSystem);
+
         loadDay();
 
         if (currentDay.id == 1)
@@ -131,36 +105,22 @@ public class GameControllerScript : MonoBehaviour
             footrpintsTutorial.SetActive(true);
         }
 
-        rulesWindow.setup(currentDay.id, getRules());
-        rulesTemplate.setup(currentDay.id, getRules());
+        rulesWindow.setup(currentDay.id, currentDay.getRulesAsStrings());
+        rulesTemplate.setup(currentDay.id, currentDay.getRulesAsStrings());
         setupTopPanel();
 
-        analyseSystem.setupAnalyseTemplate(currentDay.analysTemplate, currentDay.analysTemplateColors);
-        
-        specialLevelSettings();
+        OnGameInit(this, currentDay);
     }
 
     private void loadDay()
     {
-        int dayId = 3;  PlayerPrefs.GetInt("dayId");
+        int dayId = PlayerPrefs.GetInt("dayId");
         currentDay = Day.load(dayId);
     }
 
     private Animal getCurrentAnimal()
     {
         return currentDay.animals[animalCounter];
-    }
-
-    private List<string> getRules()
-    {
-        List<string> rules = new List<string>();
-        
-        foreach (Rule rule in currentDay.rules)
-        {
-            rules.Add(rule.rule);
-        }
-
-        return rules;
     }
 
     private void setupTopPanel()
@@ -171,17 +131,7 @@ public class GameControllerScript : MonoBehaviour
 
     private void setupAnimalWindow()
     {
-        Animal animal = getCurrentAnimal();
-        animalTitle.text = string.Format("ANIMAL #{0}", animalCounter + 1);
-        animalName.text = animal.name;
-        animalType.text = animal.typeName;
-        animalImage.sprite = images.getImageById(animal.iconId);
-
-        waitNext = false;
-
-        footprintsAdded = false;
-        analyseAdded = false;
-        voiceDiagramAdded = false;
+        animalWindowSetup.setup(getCurrentAnimal(), animalCounter, images);
 
         analyseCardAdded = false;
         footprintsCardAdded = false;
@@ -221,8 +171,6 @@ public class GameControllerScript : MonoBehaviour
 
     public void animalInteract()
     {
-        if (waitNext)
-            return;
 
         bool infoNow = false;
         if (!infoCardAdded && getCurrentAnimal().info != null)
@@ -232,17 +180,17 @@ public class GameControllerScript : MonoBehaviour
             infoNow = true;
         }
 
-        if (!voiceCardAdded && voiceDiagramAdded && getCurrentAnimal().voice != getCurrentAnimal().typeId && getCurrentAnimal().infoVoice != null)
+        if (!voiceCardAdded && voiceSystem.isDiagramAdded() && getCurrentAnimal().voice != getCurrentAnimal().typeId && getCurrentAnimal().infoVoice != null)
         {
             addTextCard(getCurrentAnimal().infoVoice);
             voiceCardAdded = true;
         } else
-        if (!footprintsCardAdded && footprintsAdded && getCurrentAnimal().footprints != getCurrentAnimal().typeId && getCurrentAnimal().infoFootprints != null)
+        if (!footprintsCardAdded && footprintsSystem.isFootrpintsAdded() && getCurrentAnimal().footprints != getCurrentAnimal().typeId && getCurrentAnimal().infoFootprints != null)
         {
             addTextCard(getCurrentAnimal().infoFootprints);
             footprintsCardAdded = true;
         } else
-        if (!analyseCardAdded && analyseAdded && !analyseSystem.isAnalyseGood(getCurrentAnimal()) && getCurrentAnimal().infoAnalyse != null)
+        if (!analyseCardAdded && analyseSystem.isAnalyseAdded() && !analyseSystem.isAnalyseGood(getCurrentAnimal()) && getCurrentAnimal().infoAnalyse != null)
         {
             addTextCard(getCurrentAnimal().infoAnalyse);
             analyseCardAdded = true;
@@ -261,53 +209,6 @@ public class GameControllerScript : MonoBehaviour
         Image textCard = spawnSystem.spawnPrefab(textCardPrefab.GetComponent<RectTransform>()).GetComponent<Image>();
         textCard.GetComponentsInChildren<Text>()[0].text = string.Format("MESSAGE FROM {0}", getCurrentAnimal().name);
         textCard.GetComponentsInChildren<Text>()[1].text = text;
-    }
-
-    public void addVoiceDiagram()
-    {
-        mainAudioSource.clip = animalSpeakSound;
-        mainAudioSource.Play();
-
-        AnimalType animalType = animalTypes.getTypeById(getCurrentAnimal().typeId);
-
-        VoiceDiagramGenerator voiceDiagram = spawnSystem.spawnPrefab(voiceDiagramPrefab.GetComponent<RectTransform>()).GetComponent<VoiceDiagramGenerator>();
-        voiceDiagram.init(animalType.voiceMin, animalType.voiceMax, true, 2);
-        voiceDiagram.generate();
-
-        voiceDiagramAdded = true;
-    }
-
-    public void addAnimalFootrpint()
-    {
-        if (waitNext)
-            return;
-        
-        if (!footprintsAdded)
-        {
-            AnimalType animalType = animalTypes.getTypeById(getCurrentAnimal().footprints);
-
-            Image footprint = spawnSystem.spawnPrefab(footprintPrefab.GetComponent<RectTransform>()).GetComponent<Image>();
-            footprint.sprite = animalType.footprintsImage;
-            
-            footprintsAdded = true;
-        }
-    }
-
-    public void addAnimalAnalyse()
-    {
-        if (waitNext)
-            return;
-
-        //if (currentDay.id == 3 && animalCounter == 0)
-        {
-            //analyseTutorial.SetActive(true);
-        }
-
-        if (!analyseAdded)
-        {
-            analyseSystem.addAnalyse(getCurrentAnimal().analyse);
-            analyseAdded = true;
-        }
     }
 
     private void addToHistory(Animal animal, string action)
@@ -394,8 +295,9 @@ public class GameControllerScript : MonoBehaviour
         }
 
         animalCounter++;
+
+        OnAnimalCome(this, getCurrentAnimal());
         setupAnimalWindow();
-        specialLevelSettings();
     }
 
     public void makeRemoveable()
@@ -484,27 +386,6 @@ public class GameControllerScript : MonoBehaviour
         //throw new System.Exception("Unhandled animal case: " + animal.name + " " + action);
     }
 
-    public void specialLevelSettings()
-    {
-        if (currentDay.id == 1)
-        {
-            //analyseTemplate.gameObject.SetActive(false);
-            analyseButton.gameObject.SetActive(false);
-            callButton.gameObject.SetActive(false);
-
-            footrpintsTemplate.gameObject.SetActive(false);
-            firstDayFootrpints.gameObject.SetActive(true);
-
-            voiceTemplate.GetComponent<Image>().sprite = firstDayVoice;
-        }
-
-        if (currentDay.id == 2)
-        {
-            //analyseTemplate.gameObject.SetActive(false);
-            analyseButton.gameObject.SetActive(false);
-        }
-    }
-
     private IEnumerator firstDayEnd()
     {
         overlay.gameObject.SetActive(true);
@@ -518,5 +399,31 @@ public class GameControllerScript : MonoBehaviour
         PlayerPrefs.SetInt("dayId", 2);
         PlayerPrefs.Save();
         SceneManager.LoadScene(radioScene);
+    }
+
+    public void addListener(IGameListener listener)
+    {
+        listeners.Add(listener);
+    }
+
+    public void removeListener(IGameListener listener)
+    {
+        listeners.Remove(listener);
+    }
+
+    public void OnAnimalCome(GameControllerScript game, Animal animal)
+    {
+        foreach(IGameListener listener in listeners)
+        {
+            listener.OnAnimalCome(game, animal);
+        }
+    }
+
+    public void OnGameInit(GameControllerScript game, Day day)
+    {
+        foreach (IGameListener listener in listeners)
+        {
+            listener.OnGameInit(game, day);
+        }
     }
 }

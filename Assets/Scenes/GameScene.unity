@@ -1131,9 +1131,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 394660607}
+  - component: {fileID: 394660611}
+  - component: {fileID: 394660610}
   - component: {fileID: 394660609}
   - component: {fileID: 394660608}
-  - component: {fileID: 394660610}
   m_Layer: 5
   m_Name: AnimalWindow
   m_TagString: Untagged
@@ -1217,6 +1218,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elementId: undefined
   canBeRemovedLater: 0
+--- !u!114 &394660611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394660606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1779784f2d6c14746b6c6a6b9ff06896, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animalTitle: {fileID: 286874878}
+  animalName: {fileID: 1540488030}
+  animalType: {fileID: 243842515}
+  animalImage: {fileID: 162585044}
 --- !u!1 &398058988
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,8 +1391,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 465699108}
-        m_MethodName: addAnimalAnalyse
+      - m_Target: {fileID: 566652835}
+        m_MethodName: addAnalyse
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1663,8 +1680,8 @@ MonoBehaviour:
   haveNothingToSayText: I HAF NOFIN TO SAY ABAUT ZAT
   spawnSystem: {fileID: 1764173418}
   analyseSystem: {fileID: 566652835}
-  mainAudioSource: {fileID: 1380995817}
-  animalSpeakSound: {fileID: 8300000, guid: 8394575aea7de23449cc40f31c056b4f, type: 3}
+  voiceSystem: {fileID: 1879287742}
+  footprintsSystem: {fileID: 1116324641}
   wildAndGoodCost: 5
   wolfReportedCost: 2
   wolfAcceptedCost: 10
@@ -1672,27 +1689,15 @@ MonoBehaviour:
   healthyDeniedCost: 4
   rulesWindow: {fileID: 711641319}
   rulesTemplate: {fileID: 1485419730}
+  animalWindowSetup: {fileID: 394660611}
   dayCounter: {fileID: 2014435951}
   watches: {fileID: 1492795676}
   callButton: {fileID: 1685001019}
-  animalTitle: {fileID: 286874878}
-  animalName: {fileID: 1540488030}
-  animalType: {fileID: 243842515}
-  animalImage: {fileID: 162585044}
-  voiceTemplate: {fileID: 1383966815}
-  footrpintsTemplate: {fileID: 475008608}
-  voiceDiagramPrefab: {fileID: 7417849898849403581, guid: 31e6b443ef0ff1c4d893f70fc619ca93,
-    type: 3}
-  footprintPrefab: {fileID: 1729687901795385797, guid: e9345cb82b34896469a7419bf6bb14cd,
-    type: 3}
   textCardPrefab: {fileID: 1155345807655680999, guid: b04c553f09a99c54eb5843fbb398ffdb,
     type: 3}
   penaltyPrefab: {fileID: 5426127481639683889, guid: 1ff0ce5375943c547b77156e11f71ac5,
     type: 3}
   overlay: {fileID: 1670788874}
-  analyseButton: {fileID: 399878601}
-  firstDayFootrpints: {fileID: 1531522208}
-  firstDayVoice: {fileID: 21300000, guid: 563e61c9793021745905b37bf4ac0654, type: 3}
   voiceTutorial: {fileID: 547781716}
   footrpintsTutorial: {fileID: 1834381798}
   analyseTutorial: {fileID: 2067202623}
@@ -1708,7 +1713,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &475008607
 GameObject:
@@ -2015,12 +2020,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 566652833}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.19696541, y: -0.036478333, z: 26.09961}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.23479725, y: -0.0910222, z: 728.0062}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Father: {fileID: 1940320226}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &566652835
 MonoBehaviour:
@@ -2412,6 +2417,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 773792125}
   m_CullTransparentMesh: 0
+--- !u!1 &914817831
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 914817833}
+  - component: {fileID: 914817832}
+  m_Layer: 0
+  m_Name: AudioSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &914817832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914817831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f95725e7e9c57c141a58318baa3d307e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainAudioSource: {fileID: 1380995817}
+  animalSpeakSound: {fileID: 8300000, guid: 8394575aea7de23449cc40f31c056b4f, type: 3}
+--- !u!4 &914817833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914817831}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1940320226}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &915157946
 GameObject:
   m_ObjectHideFlags: 0
@@ -3383,6 +3433,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1042951309}
   m_CullTransparentMesh: 0
+--- !u!1 &1116324639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1116324640}
+  - component: {fileID: 1116324641}
+  m_Layer: 0
+  m_Name: FootprintsSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1116324640
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116324639}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1940320226}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1116324641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116324639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa771ba5e2130fc439e9057e1af8c544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footrpintsTemplate: {fileID: 475008608}
+  footprintPrefab: {fileID: 1729687901795385797, guid: e9345cb82b34896469a7419bf6bb14cd,
+    type: 3}
+  spawnSystem: {fileID: 1764173418}
+  animalTypes: {fileID: 1030161613}
 --- !u!1 &1141562830
 GameObject:
   m_ObjectHideFlags: 0
@@ -3524,7 +3622,7 @@ GameObject:
   - component: {fileID: 1154508932}
   - component: {fileID: 1154508931}
   m_Layer: 0
-  m_Name: Images
+  m_Name: GameImages
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3735,7 +3833,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 465699108}
+      - m_Target: {fileID: 1116324641}
         m_MethodName: addAnimalFootrpint
         m_Mode: 1
         m_Arguments:
@@ -3990,7 +4088,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1383966814
 GameObject:
@@ -5088,12 +5186,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1764173417}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.19696541, y: -0.036478333, z: 26.09961}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.23479725, y: -0.0910222, z: 728.0062}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 1940320226}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1781068492
 GameObject:
@@ -5481,6 +5579,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852001747}
   m_CullTransparentMesh: 0
+--- !u!1 &1879287740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1879287741}
+  - component: {fileID: 1879287742}
+  m_Layer: 0
+  m_Name: VoiceSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1879287741
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879287740}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1940320226}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1879287742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879287740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b05e7ac087acb724495beb83fc7a52ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voiceTemplate: {fileID: 1383966815}
+  voiceDiagramPrefab: {fileID: 7417849898849403581, guid: 31e6b443ef0ff1c4d893f70fc619ca93,
+    type: 3}
+  spawnSystem: {fileID: 1764173418}
+  audioSystem: {fileID: 914817832}
+  animalTypes: {fileID: 1030161613}
 --- !u!1 &1936602857
 GameObject:
   m_ObjectHideFlags: 0
@@ -5558,6 +5705,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1936602857}
   m_CullTransparentMesh: 0
+--- !u!1 &1940320225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1940320226}
+  m_Layer: 0
+  m_Name: GameSystems
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1940320226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940320225}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.43176267, y: 0.054543868, z: -701.9066}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 914817833}
+  - {fileID: 566652834}
+  - {fileID: 1764173419}
+  - {fileID: 1879287741}
+  - {fileID: 1116324640}
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1947558605
 GameObject:
   m_ObjectHideFlags: 0
@@ -6362,7 +6544,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 465699108}
+      - m_Target: {fileID: 1879287742}
         m_MethodName: addVoiceDiagram
         m_Mode: 1
         m_Arguments:

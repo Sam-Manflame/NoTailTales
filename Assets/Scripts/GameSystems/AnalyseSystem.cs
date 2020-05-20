@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AnalyseSystem : MonoBehaviour
+public class AnalyseSystem : MonoBehaviour, IGameListener
 {
     [SerializeField]
     private RectTransform analyseTemplate;
@@ -14,6 +14,9 @@ public class AnalyseSystem : MonoBehaviour
 
     private int[] analyseValues;
     private int[] analyseTemplateColors;
+
+    private Animal currentAnimal = null;
+    private bool analyseAdded = true;
    
     public void setupAnalyseTemplate(int[] analyseValues, int[] analyseTemplateColors)
     {
@@ -33,13 +36,20 @@ public class AnalyseSystem : MonoBehaviour
         }
     }
 
-    public void addAnalyse(int[] animalAnalyse)
+    public void addAnalyse()
     {
+        // не добавляем карточку с анализом повторно
+        if (analyseAdded)
+            return;
+
         RectTransform analyse = spawnSystem.spawnPrefab(analysePrefab);
+        if (currentAnimal.analyse == null)
+            return;
+
         for (int i = 0; i < analyse.childCount; i++)
         {
             analyse.GetChild(i).GetComponent<Image>().color =
-                animalAnalyse[i] == 0 ? Color.black : Color.clear;
+                currentAnimal.analyse[i] == 0 ? Color.black : Color.clear;
         }
     }
 
@@ -67,5 +77,21 @@ public class AnalyseSystem : MonoBehaviour
                 return false;
         }
         return true;
+    }
+
+    public void OnAnimalCome(GameControllerScript game, Animal animal)
+    {
+        currentAnimal = animal;
+        analyseAdded = false;
+    }
+
+    public void OnGameInit(GameControllerScript game, Day day)
+    {
+        setupAnalyseTemplate(day.analysTemplate, day.analysTemplateColors);
+    }
+
+    public bool isAnalyseAdded()
+    {
+        return analyseAdded;
     }
 }

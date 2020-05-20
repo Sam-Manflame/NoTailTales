@@ -20,6 +20,18 @@ public class Day
 
     public string[] radio;
 
+    public List<string> getRulesAsStrings()
+    {
+        List<string> result = new List<string>();
+
+        foreach (Rule rule in rules)
+        {
+            result.Add(rule.rule);
+        }
+
+        return result;
+    }
+
     public static Day load(int id)
     {
         string path = string.Format(Application.streamingAssetsPath + "\\day{0}.json", id);
