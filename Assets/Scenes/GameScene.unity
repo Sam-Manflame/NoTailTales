@@ -1230,6 +1230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1779784f2d6c14746b6c6a6b9ff06896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  images: {fileID: 4322769047570042123, guid: 892da30faaad664479be36f9f5f15786, type: 3}
   animalTitle: {fileID: 286874878}
   animalName: {fileID: 1540488030}
   animalType: {fileID: 243842515}
@@ -1675,29 +1676,21 @@ MonoBehaviour:
   radioScene: 4
   levelFinishScene: 5
   minutesInSecond: 2
-  animalTypes: {fileID: 1030161613}
-  images: {fileID: 1154508931}
-  haveNothingToSayText: I HAF NOFIN TO SAY ABAUT ZAT
+  animalTypes: {fileID: 9064094853396145591, guid: 8f50ae9063de3e2458a1472f14532c86,
+    type: 3}
+  images: {fileID: 4322769047570042123, guid: 892da30faaad664479be36f9f5f15786, type: 3}
   spawnSystem: {fileID: 1764173418}
   analyseSystem: {fileID: 566652835}
   voiceSystem: {fileID: 1879287742}
   footprintsSystem: {fileID: 1116324641}
-  wildAndGoodCost: 5
-  wolfReportedCost: 2
-  wolfAcceptedCost: 10
-  illAcceptedCost: 6
-  healthyDeniedCost: 4
+  interactionSystem: {fileID: 778805998}
   rulesWindow: {fileID: 711641319}
   rulesTemplate: {fileID: 1485419730}
   animalWindowSetup: {fileID: 394660611}
+  overlay: {fileID: 1670788874}
   dayCounter: {fileID: 2014435951}
   watches: {fileID: 1492795676}
   callButton: {fileID: 1685001019}
-  textCardPrefab: {fileID: 1155345807655680999, guid: b04c553f09a99c54eb5843fbb398ffdb,
-    type: 3}
-  penaltyPrefab: {fileID: 5426127481639683889, guid: 1ff0ce5375943c547b77156e11f71ac5,
-    type: 3}
-  overlay: {fileID: 1670788874}
   voiceTutorial: {fileID: 547781716}
   footrpintsTutorial: {fileID: 1834381798}
   analyseTutorial: {fileID: 2067202623}
@@ -1713,7 +1706,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &475008607
 GameObject:
@@ -2417,6 +2410,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 773792125}
   m_CullTransparentMesh: 0
+--- !u!1 &778805996
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 778805997}
+  - component: {fileID: 778805998}
+  m_Layer: 0
+  m_Name: InteractionSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &778805997
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778805996}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1940320226}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &778805998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778805996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30761bba13862444f93774e8c7af602a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voiceSystem: {fileID: 1879287742}
+  footprintsSystem: {fileID: 1116324641}
+  analyseSystem: {fileID: 566652835}
+  spawnSystem: {fileID: 1764173418}
+  haveNothingToSayText: I HAF NOTING TO SFAY
 --- !u!1 &914817831
 GameObject:
   m_ObjectHideFlags: 0
@@ -3291,70 +3332,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1026445338}
   m_CullTransparentMesh: 0
---- !u!1 &1030161611
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1030161612}
-  - component: {fileID: 1030161613}
-  m_Layer: 0
-  m_Name: AnimalTypes
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1030161612
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1030161611}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.2090151, y: 0.05118578, z: 104.67578}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1030161613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1030161611}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88a89c01c8d327c47ab599683b0e589f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  types:
-  - typeId: pig
-    voiceMin: 6
-    voiceMax: 9
-    footprintsImage: {fileID: 21300000, guid: 2b13c663bc073a44c9c52aa8fe491fe1, type: 3}
-    cost: 2
-  - typeId: wolf
-    voiceMin: 4
-    voiceMax: 6
-    footprintsImage: {fileID: 21300000, guid: 7677df9f8d1e35b4991dd247f15affab, type: 3}
-    cost: 2
-  - typeId: cow
-    voiceMin: 3
-    voiceMax: 4
-    footprintsImage: {fileID: 21300000, guid: 17fff29660a68ff488cd124fa60109c9, type: 3}
-    cost: 6
-  - typeId: sheep
-    voiceMin: 1
-    voiceMax: 2
-    footprintsImage: {fileID: 21300000, guid: 17fff29660a68ff488cd124fa60109c9, type: 3}
-    cost: 4
 --- !u!1 &1042951309
 GameObject:
   m_ObjectHideFlags: 0
@@ -3480,7 +3457,8 @@ MonoBehaviour:
   footprintPrefab: {fileID: 1729687901795385797, guid: e9345cb82b34896469a7419bf6bb14cd,
     type: 3}
   spawnSystem: {fileID: 1764173418}
-  animalTypes: {fileID: 1030161613}
+  animalTypes: {fileID: 9064094853396145591, guid: 8f50ae9063de3e2458a1472f14532c86,
+    type: 3}
 --- !u!1 &1141562830
 GameObject:
   m_ObjectHideFlags: 0
@@ -3611,64 +3589,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1141562830}
   m_CullTransparentMesh: 0
---- !u!1 &1154508930
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1154508932}
-  - component: {fileID: 1154508931}
-  m_Layer: 0
-  m_Name: GameImages
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1154508931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1154508930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 904a2212e2afba846987ce483875002c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  images:
-  - imageId: pig1
-    image: {fileID: 21300000, guid: 5c76e1832d9a6ed48a57d314c55b04d7, type: 3}
-  - imageId: wolf
-    image: {fileID: 21300000, guid: ece68047a6e1f2c4e851dfb8054958d8, type: 3}
-  - imageId: pig2
-    image: {fileID: 21300000, guid: 70780f2ac9311ad47b4627c244b59913, type: 3}
-  - imageId: sheep1
-    image: {fileID: 21300000, guid: 8c74f5a6403c97c4e8ce424bd7dbfe7c, type: 3}
-  - imageId: cow1
-    image: {fileID: 21300000, guid: b0fbb680da601c74799477f8d279cc5c, type: 3}
-  - imageId: cow2
-    image: {fileID: 21300000, guid: 6e0b2d9480642384f8975dab9070485e, type: 3}
-  - imageId: sheep2
-    image: {fileID: 21300000, guid: 7b1065702c5aa45498362dee9933eee1, type: 3}
---- !u!4 &1154508932
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1154508930}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.28125927, y: 0.07017268, z: 99.328125}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1167767604
 GameObject:
   m_ObjectHideFlags: 0
@@ -4088,7 +4008,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1383966814
 GameObject:
@@ -5179,6 +5099,10 @@ MonoBehaviour:
   movableArea: {fileID: 243302284}
   appearPlace: {fileID: 2112868117}
   targetPlace: {fileID: 512267546}
+  textCardPrefab: {fileID: 1155345807655680999, guid: b04c553f09a99c54eb5843fbb398ffdb,
+    type: 3}
+  penaltyPrefab: {fileID: 5426127481639683889, guid: 1ff0ce5375943c547b77156e11f71ac5,
+    type: 3}
 --- !u!4 &1764173419
 Transform:
   m_ObjectHideFlags: 0
@@ -5627,7 +5551,8 @@ MonoBehaviour:
     type: 3}
   spawnSystem: {fileID: 1764173418}
   audioSystem: {fileID: 914817832}
-  animalTypes: {fileID: 1030161613}
+  animalTypes: {fileID: 9064094853396145591, guid: 8f50ae9063de3e2458a1472f14532c86,
+    type: 3}
 --- !u!1 &1936602857
 GameObject:
   m_ObjectHideFlags: 0
@@ -5737,8 +5662,9 @@ Transform:
   - {fileID: 1764173419}
   - {fileID: 1879287741}
   - {fileID: 1116324640}
+  - {fileID: 778805997}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1947558605
 GameObject:

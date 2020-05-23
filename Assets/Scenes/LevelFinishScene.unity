@@ -673,6 +673,8 @@ MonoBehaviour:
   title: {fileID: 953831358}
   saveGoal: 300
   radioScene: 4
+  animalTypes: {fileID: 9064094853396145591, guid: 8f50ae9063de3e2458a1472f14532c86,
+    type: 3}
   achievementHuman: {fileID: 2016623729}
   achievementMonkey: {fileID: 6868985}
   achievementVirus: {fileID: 463731466}
@@ -998,7 +1000,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: WOLVES ACCEPTED
+  m_Text: PREDATORS ACCEPTED
 --- !u!222 &263972736
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1229,7 +1231,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: WILD & GOOD
+  m_Text: WILD ANIMALS
 --- !u!222 &300084058
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4769,7 +4771,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: WOLVES REPORTED
+  m_Text: PREDATORS REPORTED
 --- !u!222 &1882804912
 CanvasRenderer:
   m_ObjectHideFlags: 0

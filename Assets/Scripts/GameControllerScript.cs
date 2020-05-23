@@ -17,9 +17,6 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     private AnimalTypes animalTypes;
     [SerializeField]
     private Images images;
-    [SerializeField]
-    [Multiline]
-    private string haveNothingToSayText;
 
     [Header("Systems")]
     [SerializeField]
@@ -30,18 +27,8 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     private VoiceSystem voiceSystem;
     [SerializeField]
     private FootprintsSystem footprintsSystem;
-
-    [Header("Special Costs")]
     [SerializeField]
-    private int wildAndGoodCost = 5;
-    [SerializeField]
-    private int wolfReportedCost = 10;
-    [SerializeField]
-    private int wolfAcceptedCost = 10;
-    [SerializeField]
-    private int illAcceptedCost = 10;
-    [SerializeField]
-    private int healthyDeniedCost = 10;
+    private InteractionSystem interactionSystem;
 
     [Header("UI Elements")]
     [SerializeField]
@@ -50,6 +37,8 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     private RulesSetup rulesTemplate;
     [SerializeField]
     private AnimalWindowSetup animalWindowSetup;
+    [SerializeField]
+    private Image overlay;
 
     [Header("Top Panel")]
     [SerializeField]
@@ -59,14 +48,6 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     [SerializeField]
     private Button callButton;
     
-    [Header("Other")]
-    [SerializeField]
-    private Image textCardPrefab;
-    [SerializeField]
-    private Image penaltyPrefab;
-    [SerializeField]
-    private Image overlay;
-
     [Header("Tutorials")]
     [SerializeField]
     private GameObject voiceTutorial;
@@ -81,12 +62,6 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     private int animalCounter = -1;
     private List<HistoryEntry> history = new List<HistoryEntry>();
     
-    private bool infoCardAdded;
-    private bool voiceCardAdded;
-    private bool footprintsCardAdded;
-    private bool analyseCardAdded;
-    private bool penaltyAdded = false;
-    
     private int dayEndTime = 18;
     private int h = 9;
     private int m = 0;
@@ -96,25 +71,21 @@ public class GameControllerScript : MonoBehaviour, IGameListener
         listeners.Add(analyseSystem);
         listeners.Add(voiceSystem);
         listeners.Add(footprintsSystem);
+        listeners.Add(interactionSystem);
+
+        listeners.Add(animalWindowSetup);
+        listeners.Add(rulesWindow);
+        listeners.Add(rulesTemplate);
 
         loadDay();
-
-        if (currentDay.id == 1)
-        {
-            voiceTutorial.SetActive(true);
-            footrpintsTutorial.SetActive(true);
-        }
-
-        rulesWindow.setup(currentDay.id, currentDay.getRulesAsStrings());
-        rulesTemplate.setup(currentDay.id, currentDay.getRulesAsStrings());
+        
         setupTopPanel();
-
         OnGameInit(this, currentDay);
     }
 
     private void loadDay()
     {
-        int dayId = PlayerPrefs.GetInt("dayId");
+        int dayId = 2; // PlayerPrefs.GetInt("dayId");
         currentDay = Day.load(dayId);
     }
 
@@ -129,14 +100,9 @@ public class GameControllerScript : MonoBehaviour, IGameListener
         setupWatches(h, m);
     }
 
-    private void setupAnimalWindow()
+    public int getAnimalCounter()
     {
-        animalWindowSetup.setup(getCurrentAnimal(), animalCounter, images);
-
-        analyseCardAdded = false;
-        footprintsCardAdded = false;
-        infoCardAdded = false;
-        voiceCardAdded = false;
+        return animalCounter;
     }
 
     public void startDayTimer()
@@ -154,7 +120,7 @@ public class GameControllerScript : MonoBehaviour, IGameListener
                 m = 0;
                 h += 1;
             }
-            if (m % 10 == 0)
+            if (m % minutesInSecond == 0)
                 setupWatches(h, m);
             yield return new WaitForSeconds(1.0f / minutesInSecond);
         }
@@ -169,48 +135,6 @@ public class GameControllerScript : MonoBehaviour, IGameListener
             watches.text = string.Format("{0}:{1:D2} PM", h - 12, m);
     }
 
-    public void animalInteract()
-    {
-
-        bool infoNow = false;
-        if (!infoCardAdded && getCurrentAnimal().info != null)
-        {
-            addTextCard(getCurrentAnimal().info);
-            infoCardAdded = true;
-            infoNow = true;
-        }
-
-        if (!voiceCardAdded && voiceSystem.isDiagramAdded() && getCurrentAnimal().voice != getCurrentAnimal().typeId && getCurrentAnimal().infoVoice != null)
-        {
-            addTextCard(getCurrentAnimal().infoVoice);
-            voiceCardAdded = true;
-        } else
-        if (!footprintsCardAdded && footprintsSystem.isFootrpintsAdded() && getCurrentAnimal().footprints != getCurrentAnimal().typeId && getCurrentAnimal().infoFootprints != null)
-        {
-            addTextCard(getCurrentAnimal().infoFootprints);
-            footprintsCardAdded = true;
-        } else
-        if (!analyseCardAdded && analyseSystem.isAnalyseAdded() && !analyseSystem.isAnalyseGood(getCurrentAnimal()) && getCurrentAnimal().infoAnalyse != null)
-        {
-            addTextCard(getCurrentAnimal().infoAnalyse);
-            analyseCardAdded = true;
-        } else
-        if (!infoNow)
-        {
-            addTextCard(haveNothingToSayText);
-        }
-    }
-
-    private void addTextCard(string text)
-    {
-        if (text == null)
-            return;
-
-        Image textCard = spawnSystem.spawnPrefab(textCardPrefab.GetComponent<RectTransform>()).GetComponent<Image>();
-        textCard.GetComponentsInChildren<Text>()[0].text = string.Format("MESSAGE FROM {0}", getCurrentAnimal().name);
-        textCard.GetComponentsInChildren<Text>()[1].text = text;
-    }
-
     private void addToHistory(Animal animal, string action)
     {
         if (currentDay.id == 1 && animalCounter == 2)
@@ -218,72 +142,37 @@ public class GameControllerScript : MonoBehaviour, IGameListener
             overlay.gameObject.SetActive(true);
             StartCoroutine(firstDayEnd());
         }
-        if (!isChoiceGood(animal, action) && !penaltyAdded)
+        string choiceResult = getChoiceResult(animal, action);
+        if (choiceResult != null)
         {
-            addPenaltyCard();
-            penaltyAdded = true;
-        }
-        else
-        {
-            history.Add(new HistoryEntry(animal, action));
-        }
-    }
-
-    private bool isChoiceGood(Animal animal, string action)
-    {
-        string trueType = animal.typeId;
-        if (animal.voice != animal.typeId)
-            trueType = animal.voice;
-        if (animal.footprints != animal.typeId)
-            trueType = animal.footprints;
-
-        foreach (Rule rule in currentDay.rules)
-        {
-            foreach(string noValue in rule.noValues)
-            {
-                if (animal.typeId.Equals(noValue) && action.Equals("accept"))
-                    return false;
-                else if (animal.typeId.Equals(noValue) && action.Equals("deny"))
-                    return true;
-
-                if (noValue.Equals("infected") && !analyseSystem.isAnalyseGood(animal) && action.Equals("accept"))
-                    return false;
-                else if (noValue.Equals("infected") && !analyseSystem.isAnalyseGood(animal) && action.Equals("deny"))
-                    return true;
-            }
+            spawnSystem.addPenaltyCard(choiceResult, 0);
         }
 
-        bool shouldCall = animal.typeId == "wolf" || animal.voice == "wolf" || animal.footprints == "wolf";
-        if (action == "call" && shouldCall)
-            return true;
-
-        if (action == "deny" && shouldCall)
-            return true;
-        if (action == "accept" && !shouldCall)
-            return true;
-        return false;
+        history.Add(new HistoryEntry(animal, action));
     }
 
-    private void addPenaltyCard()
+    private string getChoiceResult(Animal animal, string action)
     {
-        spawnSystem.spawnPrefab(penaltyPrefab.GetComponent<RectTransform>());
+        List<HistoryEntry> animals = new List<HistoryEntry>();
+        animals.Add(new HistoryEntry(animal, action));
+        LevelResult result = LevelResult.generateLevelResult(currentDay, animals, analyseSystem, animalTypes);
+        string animalType = result.types[0];
+
+        switch (animalType)
+        {
+            case "illAccepted":
+            case "predatorAccepted":
+            case "healthyDenied":
+                return animalType;
+
+        }
+        return null;
     }
 
-    public void denyAnimal()
-    {
-        addToHistory(currentDay.animals[animalCounter], "deny");
-        makeRemoveable();
-    }
 
-    public void callAnimal()
+    public void doChoice(string choice)
     {
-        addToHistory(currentDay.animals[animalCounter], "call");
-        makeRemoveable();
-    }
-
-    public void acceptAnimal()
-    {
-        addToHistory(currentDay.animals[animalCounter], "accept");
+        addToHistory(currentDay.animals[animalCounter], choice);
         makeRemoveable();
     }
 
@@ -297,7 +186,6 @@ public class GameControllerScript : MonoBehaviour, IGameListener
         animalCounter++;
 
         OnAnimalCome(this, getCurrentAnimal());
-        setupAnimalWindow();
     }
 
     public void makeRemoveable()
@@ -314,76 +202,11 @@ public class GameControllerScript : MonoBehaviour, IGameListener
 
     private void endDay()
     {
-        PlayerPrefs.SetString("levelResult", JsonUtility.ToJson(generateLevelResult()));
+        PlayerPrefs.SetString("levelResult", JsonUtility.ToJson(LevelResult.generateLevelResult(currentDay, history, analyseSystem, animalTypes)));
         PlayerPrefs.SetInt("dayId", currentDay.id + 1);
         PlayerPrefs.Save();
 
         SceneManager.LoadScene(levelFinishScene);
-    }
-
-    private LevelResult generateLevelResult()
-    {
-        LevelResult levelResult = new LevelResult();
-        levelResult.counts = new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
-        levelResult.moneyChanges = new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
-
-        foreach (HistoryEntry entry in history)
-        {
-            int type = countAnimal(entry.animal, entry.action);
-            if (type >= 0 && type < levelResult.counts.Length)
-                levelResult.counts[type] += 1;
-        }
-
-        levelResult.moneyChanges[0] = levelResult.counts[0] * animalTypes.getTypeById("sheep").cost;
-        levelResult.moneyChanges[1] = levelResult.counts[1] * animalTypes.getTypeById("cow").cost;
-        levelResult.moneyChanges[2] = levelResult.counts[2] * animalTypes.getTypeById("pig").cost;
-        levelResult.moneyChanges[3] = levelResult.counts[3] * wildAndGoodCost;
-        levelResult.moneyChanges[4] = levelResult.counts[4] * wolfReportedCost;
-        levelResult.moneyChanges[5] = - levelResult.counts[5] * wolfAcceptedCost;
-        levelResult.moneyChanges[6] = - levelResult.counts[6] * illAcceptedCost;
-        levelResult.moneyChanges[7] = - levelResult.counts[7] * healthyDeniedCost;
-
-        return levelResult;
-    }
-
-    private int countAnimal(Animal animal, string action)
-    {
-        bool isWolf = animal.typeId == "wolf" || animal.voice == "wolf" || animal.footprints == "wolf";
-        if (action == "call" && isWolf)
-            return 4;
-        if (action == "accept" && isWolf)
-            return 5;
-
-        foreach (Rule rule in currentDay.rules)
-        {
-            foreach (string noValue in rule.noValues)
-            {
-                if (animal.typeId.Equals(noValue) && action.Equals("accept"))
-                    return 5;
-
-                if (noValue.Equals("infected") && !analyseSystem.isAnalyseGood(animal) && action.Equals("accept"))
-                    return 6;
-            }
-        }
-
-        if (!isWolf)
-        {
-            if (analyseSystem.isAnalyseGood(animal) && (action.Equals("deny") || action.Equals("call")))
-                return 7;
-            switch (animal.typeId)
-            {
-                case "sheep":
-                    return 0;
-                case "cow":
-                    return 1;
-                case "pig":
-                    return 2;
-                default:
-                    return 3;
-            }
-        }
-        return -1;
-        //throw new System.Exception("Unhandled animal case: " + animal.name + " " + action);
     }
 
     private IEnumerator firstDayEnd()

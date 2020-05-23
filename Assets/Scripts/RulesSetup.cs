@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RulesSetup : MonoBehaviour
+public class RulesSetup : MonoBehaviour, IGameListener
 {
     [SerializeField]
     private Text titleText;
@@ -13,6 +13,16 @@ public class RulesSetup : MonoBehaviour
 
     [SerializeField]
     private string dayCounterString = "RULESET: DAY #{0}";
+
+    public void OnAnimalCome(GameControllerScript game, Animal animal)
+    {
+        
+    }
+
+    public void OnGameInit(GameControllerScript game, Day day)
+    {
+        setup(day.id, day.getRulesAsStrings());
+    }
 
     public void setup(int day, List<string> rules)
     {

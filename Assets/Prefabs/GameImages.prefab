@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4322769047570042122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4322769047570042124}
+  - component: {fileID: 4322769047570042123}
+  m_Layer: 0
+  m_Name: GameImages
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4322769047570042124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4322769047570042122}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.28125927, y: 0.07017268, z: 99.328125}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4322769047570042123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4322769047570042122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 904a2212e2afba846987ce483875002c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  images:
+  - imageId: pig1
+    image: {fileID: 21300000, guid: 5c76e1832d9a6ed48a57d314c55b04d7, type: 3}
+  - imageId: wolf
+    image: {fileID: 21300000, guid: ece68047a6e1f2c4e851dfb8054958d8, type: 3}
+  - imageId: pig2
+    image: {fileID: 21300000, guid: 70780f2ac9311ad47b4627c244b59913, type: 3}
+  - imageId: sheep1
+    image: {fileID: 21300000, guid: 8c74f5a6403c97c4e8ce424bd7dbfe7c, type: 3}
+  - imageId: cow1
+    image: {fileID: 21300000, guid: b0fbb680da601c74799477f8d279cc5c, type: 3}
+  - imageId: cow2
+    image: {fileID: 21300000, guid: 6e0b2d9480642384f8975dab9070485e, type: 3}
+  - imageId: sheep2
+    image: {fileID: 21300000, guid: 7b1065702c5aa45498362dee9933eee1, type: 3}

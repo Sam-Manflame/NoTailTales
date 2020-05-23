@@ -13,6 +13,8 @@ public class FinishSceneController : MonoBehaviour
     private int saveGoal = 300;
     [SerializeField]
     private int radioScene = 4;
+    [SerializeField]
+    private AnimalTypes animalTypes;
 
     [Header("Achievements")]
     [SerializeField]
@@ -71,19 +73,19 @@ public class FinishSceneController : MonoBehaviour
     {
         LevelResult levelResult = getLevelResult();
 
-        setLineData(sheepLine, levelResult.counts[0], levelResult.moneyChanges[0]);
-        setLineData(cowsLine, levelResult.counts[1], levelResult.moneyChanges[1]);
-        setLineData(pigsLine, levelResult.counts[2], levelResult.moneyChanges[2]);
-        setLineData(wildAndGoodLine, levelResult.counts[3], levelResult.moneyChanges[3]);
-        setLineData(wolvesReportedLine, levelResult.counts[4], levelResult.moneyChanges[4]);
-        setLineData(wolvesAcceptedLine, levelResult.counts[5], levelResult.moneyChanges[5]);
-        setLineData(illAcceptedLine, levelResult.counts[6], levelResult.moneyChanges[6]);
-        setLineData(healthyDeniedLine, levelResult.counts[7], levelResult.moneyChanges[7]);
+        setLineData(sheepLine, levelResult.getCountOf("sheep"), levelResult.getCountOf("sheep") * animalTypes.getTypeById("sheep").cost);
+        setLineData(cowsLine, levelResult.getCountOf("cow"), levelResult.getCountOf("cow") * animalTypes.getTypeById("cow").cost);
+        setLineData(pigsLine, levelResult.getCountOf("pig"), levelResult.getCountOf("pig") * animalTypes.getTypeById("pig").cost);
+        setLineData(wildAndGoodLine, levelResult.getCountOf("goodAccepted"), levelResult.getCountOf("goodAccepted") * animalTypes.getTypeById("goodAccepted").cost);
+        setLineData(wolvesReportedLine, levelResult.getCountOf("predatorCalled"), levelResult.getCountOf("predatorCalled") * animalTypes.getTypeById("predatorCalled").cost);
+        setLineData(wolvesAcceptedLine, levelResult.getCountOf("predatorAccepted"), levelResult.getCountOf("predatorAccepted") * animalTypes.getTypeById("predatorAccepted").cost);
+        setLineData(illAcceptedLine, levelResult.getCountOf("illAccepted"), levelResult.getCountOf("illAccepted") * animalTypes.getTypeById("illAccepted").cost);
+        setLineData(healthyDeniedLine, levelResult.getCountOf("healthyDenied"), levelResult.getCountOf("healthyDenied") * animalTypes.getTypeById("healthyDenied").cost);
 
         int sum = 0;
-        for (int i = 0; i < levelResult.moneyChanges.Length; i++)
+        for (int i = 0; i < levelResult.types.Length; i++)
         {
-            sum += levelResult.moneyChanges[i];
+            sum += levelResult.counts[i] * animalTypes.getTypeById(levelResult.types[i]).cost;
         }
         setLineData(totalLine, -1, sum);
 
@@ -242,42 +244,4 @@ public class FinishSceneController : MonoBehaviour
         }
         return expenses;
     }
-
-    /*private LevelResult getTestResult()
-    {
-        LevelResult result = new LevelResult();
-
-        result.animals = new string[8] 
-        {
-            "SHEEP", "COWS", "PIGS", "WILD & GOOD",
-            "WOLVES REPORTED", "WOLVES ACCEPTED", "ILL ACCEPTED", "HELTHY DENIED"
-        };
-        result.counts = new int[8]
-        {
-            1, 2, 4, 0, 2, 1, 1, 1
-        };
-        result.moneyChanges = new int[8]
-        {
-            4, 12, 12, 0, 6, -10, -10, -10
-        };
-
-        return result;
-    }
-
-    private Expenses getTestExpenses()
-    {
-        Expenses expenses = new Expenses();
-
-        expenses.expenses = new string[4]
-        {
-            "GET FOOD", "GET BED", "KILL INSECTS", "KILL BILL"
-        };
-
-        expenses.cost = new int[4]
-        {
-            4, 12, 8, 20
-        };
-
-        return expenses;
-    }*/
 }

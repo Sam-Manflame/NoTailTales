@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpawnSystem : MonoBehaviour
 {
@@ -9,6 +10,12 @@ public class SpawnSystem : MonoBehaviour
     private RectTransform appearPlace;
     [SerializeField]
     private RectTransform targetPlace;
+
+    [Header("Common Prefabs")]
+    [SerializeField]
+    private Image textCardPrefab;
+    [SerializeField]
+    private Image penaltyPrefab;
 
     public RectTransform spawnPrefab(RectTransform prefab)
     {
@@ -30,5 +37,17 @@ public class SpawnSystem : MonoBehaviour
         }
         if (rect.transform.GetComponent<MovableElement>() != null)
             rect.transform.GetComponent<MovableElement>().setCanBeMoved(true);
+    }
+
+    public void addTextCard(string text, string from)
+    {
+        Image textCard = spawnPrefab(textCardPrefab.GetComponent<RectTransform>()).GetComponent<Image>();
+        textCard.GetComponentsInChildren<Text>()[0].text = string.Format("MESSAGE FROM {0}", from);
+        textCard.GetComponentsInChildren<Text>()[1].text = text;
+    }
+
+    public void addPenaltyCard(string reason, int moneyChange)
+    {
+        spawnPrefab(penaltyPrefab.GetComponent<RectTransform>());
     }
 }

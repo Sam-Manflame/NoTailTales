@@ -13,5 +13,7 @@ public class AnimalType
 
     public Sprite footprintsImage;
 
-    public int cost;
+    public int cost = 0;
+
+    public bool predator = false;
 }
