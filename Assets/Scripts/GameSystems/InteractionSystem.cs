@@ -12,6 +12,10 @@ public class InteractionSystem : MonoBehaviour, IGameListener
     private AnalyseSystem analyseSystem;
     [SerializeField]
     private SpawnSystem spawnSystem;
+
+    [SerializeField]
+    private RectTransform interactionButton;
+
     [SerializeField]
     [Multiline]
     private string haveNothingToSayText;
@@ -35,12 +39,14 @@ public class InteractionSystem : MonoBehaviour, IGameListener
 
     public void OnGameInit(GameControllerScript game, Day day)
     {
-
+        if (day.id <= 1)
+        {
+            interactionButton.gameObject.SetActive(false);
+        }
     }
 
     public void animalInteract()
     {
-
         bool infoNow = false;
         if (!infoCardAdded && currentAnimal.info != null)
         {

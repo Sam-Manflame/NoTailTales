@@ -14,6 +14,9 @@ public class PrintingTextMessage : MonoBehaviour
     [SerializeField]
     private bool activated = false;
 
+    [SerializeField]
+    private AudioClip typingSound;
+
     private Text text;
 
     public System.Action onEnded { get; set; }
@@ -32,6 +35,11 @@ public class PrintingTextMessage : MonoBehaviour
             lastSymbolTime = Time.time;
             if (ended())
             {
+                if (GetComponent<AudioSource>() != null)
+                {
+                    GetComponent<AudioSource>().Stop();
+                }
+
                 if (onEnded != null)
                     onEnded();
             }
@@ -44,11 +52,24 @@ public class PrintingTextMessage : MonoBehaviour
         this.text.text = "";
         this.activated = true;
         this.lastSymbolTime = 0;
+
+        tryPlaySound();
+    }
+
+    private void tryPlaySound()
+    {
+        if (typingSound != null && GetComponent<AudioSource>() != null)
+        {
+            AudioSource audioSource = GetComponent<AudioSource>();
+            audioSource.clip = typingSound;
+            audioSource.Play();
+        }
     }
 
     public void Activate()
     {
         activated = true;
+        tryPlaySound();
     }
 
     public void Disactivate()

@@ -21,6 +21,7 @@ public class VoiceSystem : MonoBehaviour, IGameListener
 
     private bool diagramAdded = true;
     private Animal currentAnimal = null;
+    private Day currentDay;
 
     public void addVoiceDiagram()
     {
@@ -28,6 +29,9 @@ public class VoiceSystem : MonoBehaviour, IGameListener
             return;
 
         audioSystem.playAnimalVoice();
+
+        if (currentDay.id <= 1)
+            return;
 
         AnimalType animalType = animalTypes.getTypeById(currentAnimal.typeId);
 
@@ -46,7 +50,16 @@ public class VoiceSystem : MonoBehaviour, IGameListener
 
     public void OnGameInit(GameControllerScript game, Day day)
     {
+        currentDay = day;
+        specialLevelSettings();
+    }
 
+    private void specialLevelSettings()
+    {
+        if (currentDay.id == 1)
+        {
+            voiceTemplate.gameObject.SetActive(false);
+        }
     }
 
     public bool isDiagramAdded()

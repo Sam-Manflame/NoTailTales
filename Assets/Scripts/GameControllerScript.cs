@@ -85,7 +85,7 @@ public class GameControllerScript : MonoBehaviour, IGameListener
 
     private void loadDay()
     {
-        int dayId = 2; // PlayerPrefs.GetInt("dayId");
+        int dayId = PlayerPrefs.GetInt("dayId");
         currentDay = Day.load(dayId);
     }
 
@@ -137,11 +137,6 @@ public class GameControllerScript : MonoBehaviour, IGameListener
 
     private void addToHistory(Animal animal, string action)
     {
-        if (currentDay.id == 1 && animalCounter == 2)
-        {
-            overlay.gameObject.SetActive(true);
-            StartCoroutine(firstDayEnd());
-        }
         string choiceResult = getChoiceResult(animal, action);
         if (choiceResult != null)
         {
@@ -172,12 +167,23 @@ public class GameControllerScript : MonoBehaviour, IGameListener
 
     public void doChoice(string choice)
     {
+        if (currentDay.id == 1 && animalCounter == 2)
+        {
+            StartCoroutine(firstDayEnd());
+            return;
+        }
+
         addToHistory(currentDay.animals[animalCounter], choice);
         makeRemoveable();
     }
 
     public void nextAnimal()
     {
+        if (currentDay.id == 1)
+        {
+            callButton.gameObject.SetActive(false);
+        }
+
         if (animalCounter == -1)
         {
             startDayTimer();

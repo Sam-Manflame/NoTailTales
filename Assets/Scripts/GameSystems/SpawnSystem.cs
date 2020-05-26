@@ -10,12 +10,21 @@ public class SpawnSystem : MonoBehaviour
     private RectTransform appearPlace;
     [SerializeField]
     private RectTransform targetPlace;
+    [SerializeField]
+    private AudioClip printingSound;
 
     [Header("Common Prefabs")]
     [SerializeField]
     private Image textCardPrefab;
     [SerializeField]
     private Image penaltyPrefab;
+
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     public RectTransform spawnPrefab(RectTransform prefab)
     {
@@ -26,6 +35,9 @@ public class SpawnSystem : MonoBehaviour
 
     private IEnumerator appearRoutine(RectTransform rect)
     {
+        audioSource.clip = printingSound;
+        audioSource.Play();
+
         rect.SetParent(movableArea);
         if (rect.transform.GetComponent<MovableElement>() != null)
             rect.transform.GetComponent<MovableElement>().setCanBeMoved(false);
@@ -37,6 +49,8 @@ public class SpawnSystem : MonoBehaviour
         }
         if (rect.transform.GetComponent<MovableElement>() != null)
             rect.transform.GetComponent<MovableElement>().setCanBeMoved(true);
+
+        audioSource.Stop();
     }
 
     public void addTextCard(string text, string from)

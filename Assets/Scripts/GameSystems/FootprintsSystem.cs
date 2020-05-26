@@ -17,6 +17,9 @@ public class FootprintsSystem : MonoBehaviour, IGameListener
     [SerializeField]
     private AnimalTypes animalTypes;
 
+    [SerializeField]
+    private RectTransform footprintsButton;
+
     private bool footprintsAdded = true;
     private Animal currentAnimal = null;
 
@@ -42,7 +45,11 @@ public class FootprintsSystem : MonoBehaviour, IGameListener
 
     public void OnGameInit(GameControllerScript game, Day day)
     {
-
+        if (day.id <= 1)
+        {
+            footrpintsTemplate.gameObject.SetActive(false);
+            footprintsButton.gameObject.SetActive(false);
+        }
     }
 
     public bool isFootrpintsAdded()

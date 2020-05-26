@@ -19,6 +19,8 @@ public class RadioSceneController : MonoBehaviour
     [SerializeField]
     private Button startDayButton;
     [SerializeField]
+    private Button skipButton;
+    [SerializeField]
     private Text dayCounter;
 
     [Header("Audio")]
@@ -66,6 +68,8 @@ public class RadioSceneController : MonoBehaviour
         radioVoice.Play();
         StartCoroutine(timeredNoise(10f));
         nextMessage();
+
+        skipButton.gameObject.SetActive(true);
     }
 
     private IEnumerator blinking(float blinkingTime, float blinkDelay)
@@ -105,8 +109,6 @@ public class RadioSceneController : MonoBehaviour
     private IEnumerator changeToSong()
     {
         StartCoroutine(timeredNoise(10f));
-
-        
         
         startNoise.Play();
 
