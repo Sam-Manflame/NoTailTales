@@ -1,21 +1,37 @@
 {
 	"id": 1,
 	"radio": [
-		"KH-KHRR.. Does this radio even work? \n ...Well. Good morning everyone on Happy Farm!",
-		"Today is the day that you've all been waiting for - \n the last working day before Golden Week holidays.",
-		"Yes, yess we're all looking forward to it. \n So let's get the work done. As good as usual.",
-		"Pigs, cows and sheep are waiting for your attention, buddies.",
+		"KH-KHRR.. Good morning everyone on Happy Farm! \n Today is the the last working day before Golden Week holidays.",
+		"So let's get the work done. \n Pigs, cows and sheep are waiting for your attention, buddies.",
 		"Don't forget: \n IF THE FARMER IS RICH - SO IS THE NATION. \n KHRR.."
 	],
 	"rules": [
-		{"rule": "LOVE COWS", "noValues": []},
-		{"rule": "LOVE PIGS", "noValues": []},
-		{"rule": "LOVE SHEEP", "noValues": []}
+		{"rule": "WELCOME COWS", "noValues": []},
+		{"rule": "WELCOME PIGS", "noValues": []},
+		{"rule": "WELCOME SHEEP", "noValues": []}
 	],
 	"animals": [
-		{"name": "HARRY PIGSTER", "typeName": "African Pig", "typeId": "pig", "iconId": "pig1", "voice": "pig", "footprints": "pig"},
-		{"name": "ALEXANDER OVECHKIN", "typeName": "Canadian Sheep", "typeId": "sheep", "iconId": "sheep1", "voice": "sheep", "footprints": "sheep"},
-		{"name": "MARY MORCOWKA", "typeName": "Orange Cow", "typeId": "cow", "iconId": "cow1", "voice": "cow", "footprints": "cow"}
+		{"name": "HARRY PIGSTER", "typeName": "African Pig", "typeId": "pig", "iconId": "pig1", "voice": "pig", "footprints": "pig",
+			"analyse":
+			[0, 1, 1, 0, 0, 0,
+			1, 0, 0, 1, 1, 1,
+			0, 0, 0, 1, 0, 1,
+			1, 0, 0, 0, 1, 0,
+			1, 0, 1, 1, 0, 1]},
+		{"name": "ALEXANDER OVECHKIN", "typeName": "Canadian Sheep", "typeId": "sheep", "iconId": "sheep1", "voice": "sheep", "footprints": "sheep",
+			"analyse":
+				[1, 1, 0, 0, 0, 0,
+				1, 0, 0, 0, 1, 0,
+				0, 0, 0, 0, 0, 1,
+				0, 0, 1, 0, 1, 0,
+				1, 1, 1, 0, 0, 1]},
+		{"name": "MARY MORCOWKA", "typeName": "Orange Cow", "typeId": "cow", "iconId": "cow1", "voice": "cow", "footprints": "cow",
+			"analyse":
+				[1, 1, 1, 1, 0, 0,
+				1, 0, 0, 1, 1, 0,
+				0, 0, 1, 1, 0, 1,
+				1, 1, 0, 1, 1, 0,
+				1, 0, 1, 1, 0, 1]}
 	],
 	"analysTemplate": [2, 3, -4, 1, -5, -3],
 	"analysTemplateColors" : [1, 0, 1, 1, 0, 0]
