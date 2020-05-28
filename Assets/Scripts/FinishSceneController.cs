@@ -14,6 +14,8 @@ public class FinishSceneController : MonoBehaviour
     [SerializeField]
     private int radioScene = 4;
     [SerializeField]
+    private int gameOverScene = 6;
+    [SerializeField]
     private AnimalTypes animalTypes;
     [SerializeField]
     private Expenses expensesObj;
@@ -295,5 +297,9 @@ public class FinishSceneController : MonoBehaviour
     private void gameOver(string reason)
     {
         Debug.Log("game over because of " + reason);
+        PlayerPrefs.SetString("gameover", reason);
+        PlayerPrefs.Save();
+
+        SceneManager.LoadScene(gameOverScene);
     }
 }

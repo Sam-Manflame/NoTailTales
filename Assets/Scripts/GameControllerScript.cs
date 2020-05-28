@@ -12,6 +12,8 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     [SerializeField]
     private int mainMenuScene = 0;
     [SerializeField]
+    private int gameOverScene = 6;
+    [SerializeField]
     private int levelFinishScene;
     [SerializeField]
     private float minutesInSecond = 2;
@@ -76,7 +78,10 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     private bool gotFreePenalty = true;
     private bool dayEnded = false;
     private bool paused = false;
-    
+
+    private int predatorAcceptedCount = 0;
+    private int healthyDeniedCount = 0;
+
     private int dayEndTime = 18;
     private int h = 9;
     private int m = 0;
@@ -178,6 +183,20 @@ public class GameControllerScript : MonoBehaviour, IGameListener
         string choiceResult = getChoiceResult(animal, action);
         if (choiceResult != null)
         {
+            if (choiceResult == "healthyDenied")
+            {
+                healthyDeniedCount++;
+                if (healthyDeniedCount == 5)
+                    gameOver("HEALTHY");
+            }
+
+            if (choiceResult == "predatorAccepted")
+            {
+                healthyDeniedCount++;
+                if (healthyDeniedCount == 7)
+                    gameOver("PREDATORS");
+            }
+
             AnimalType animalType = animalTypes.getTypeById(choiceResult);
             spawnSystem.addPenaltyCard(animalType.penaltyString, animal.name, gotFreePenalty ? 0 : animalType.cost);
 
@@ -320,6 +339,15 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     public void goToMainMenu()
     {
         SceneManager.LoadScene(mainMenuScene);
+    }
+
+    private void gameOver(string reason)
+    {
+        Debug.Log("game over because of " + reason);
+        PlayerPrefs.SetString("gameover", reason);
+        PlayerPrefs.Save();
+
+        SceneManager.LoadScene(gameOverScene);
     }
 
     public void addListener(IGameListener listener)
