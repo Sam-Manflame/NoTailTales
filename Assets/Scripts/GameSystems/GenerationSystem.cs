@@ -36,6 +36,7 @@ public class GenerationSystem : MonoBehaviour, IGameListener
                     generationType = null;
                     break;
                 }
+                i--;
             }
         }
 
@@ -61,6 +62,12 @@ public class GenerationSystem : MonoBehaviour, IGameListener
         generateName(animal);
         generateTypeName(animal);
         generateIcon(animal);
+
+        Debug.Log(string.Format("GENERATED: {0} {1} {2} {3} {4} {5} {6}",
+            generationType, animal.typeId, animal.typeName, animal.name, 
+            animal.voice, animal.footprints, analyseSystem.isAnalyseGood(animal)));
+
+        generationHistory.Add(generationType);
 
         return animal;
     }
@@ -107,7 +114,7 @@ public class GenerationSystem : MonoBehaviour, IGameListener
             + " " 
             + surnameParts1[Random.Range(0, surnameParts1.Count)] 
             + surnameParts2[Random.Range(0, surnameParts2.Count)];
-
+        
         return animal;
     }
 
@@ -183,6 +190,11 @@ public class GenerationSystem : MonoBehaviour, IGameListener
     }
 
     public void OnAnimalCome(GameControllerScript game, Animal animal)
+    {
+        
+    }
+
+    public void OnChoiceDone(GameControllerScript game, Animal animal)
     {
         
     }

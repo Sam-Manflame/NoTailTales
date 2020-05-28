@@ -31,6 +31,8 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     private InteractionSystem interactionSystem;
     [SerializeField]
     private GenerationSystem generationSystem;
+    [SerializeField]
+    private AudioSystem audioSystem;
 
     [Header("UI Elements")]
     [SerializeField]
@@ -41,6 +43,8 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     private AnimalWindowSetup animalWindowSetup;
     [SerializeField]
     private Image overlay;
+    [SerializeField]
+    private ClockSetup clock;
 
     [Header("Top Panel")]
     [SerializeField]
@@ -66,6 +70,7 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     private List<Animal> generatedAnimals = new List<Animal>();
 
     private bool gotFreePenalty = true;
+    private bool dayEnded = false;
     
     private int dayEndTime = 18;
     private int h = 9;
@@ -110,7 +115,7 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     private void setupTopPanel()
     {
         dayCounter.text = string.Format("DAY #{0}", currentDay.id);
-        setupWatches(h, m);
+        clock.setup(h, m, false);
     }
 
     public int getAnimalCounter()
@@ -125,7 +130,7 @@ public class GameControllerScript : MonoBehaviour, IGameListener
 
     private IEnumerator dayTimer()
     {
-        while (h < dayEndTime || currentDay.id == 1)
+        while (h < dayEndTime)
         {
             m += 1;
             if (m == 60)
@@ -134,20 +139,19 @@ public class GameControllerScript : MonoBehaviour, IGameListener
                 h += 1;
             }
             if (m % minutesInSecond == 0)
-                setupWatches(h, m);
+                clock.setup(h, m, true);
             yield return new WaitForSeconds(1.0f / minutesInSecond);
         }
-        endDay();
+        if (currentDay.id == 1)
+        {
+            StartCoroutine(firstDayEnd());
+        } else
+        {
+            audioSystem.playDayEndSound();
+            dayEnded = true;
+        }
     }
-
-    private void setupWatches(int h, int m)
-    {
-        if (h <= 12)
-            watches.text = string.Format("{0}:{1:D2} AM", h, m);
-        else
-            watches.text = string.Format("{0}:{1:D2} PM", h - 12, m);
-    }
-
+    
     private void addToHistory(Animal animal, string action)
     {
         string choiceResult = getChoiceResult(animal, action);
@@ -171,7 +175,7 @@ public class GameControllerScript : MonoBehaviour, IGameListener
         List<HistoryEntry> animals = new List<HistoryEntry>();
         animals.Add(new HistoryEntry(animal, action));
         LevelResult result = LevelResult.generateLevelResult(currentDay, animals, analyseSystem, animalTypes);
-        string animalType = result.types[0];
+        string animalType = result.types.Length > 0 ? result.types[0] : "";
 
         switch (animalType)
         {
@@ -187,14 +191,21 @@ public class GameControllerScript : MonoBehaviour, IGameListener
 
     public void doChoice(string choice)
     {
-        if (currentDay.id == 1 && animalCounter == 2)
+        //if (currentDay.id == 1 && animalCounter == 2)
         {
-            StartCoroutine(firstDayEnd());
-            return;
+            //StartCoroutine(firstDayEnd());
+            //return;
         }
 
-        addToHistory(currentDay.animals[animalCounter], choice);
+        addToHistory(getCurrentAnimal(), choice);
         makeRemoveable();
+
+        OnChoiceDone(this, getCurrentAnimal());
+
+        if (dayEnded)
+        {
+            endDay();
+        }
     }
 
     public void nextAnimal()
@@ -273,6 +284,14 @@ public class GameControllerScript : MonoBehaviour, IGameListener
         foreach (IGameListener listener in listeners)
         {
             listener.OnGameInit(game, day);
+        }
+    }
+
+    public void OnChoiceDone(GameControllerScript game, Animal animal)
+    {
+        foreach (IGameListener listener in listeners)
+        {
+            listener.OnChoiceDone(game, animal);
         }
     }
 }

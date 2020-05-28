@@ -28,7 +28,7 @@ public class AnalyseSystem : MonoBehaviour, IGameListener
             Image slot = analyseTemplate.GetChild(i).GetComponent<Image>();
             slot.color = analyseTemplateColors[i] == 0 ? Color.black : Color.clear;
             Text slotText = slot.transform.GetChild(0).GetComponent<Text>();
-            slotText.color = analyseTemplateColors[i] == 0 ? Color.white : Color.black;
+            //slotText.color = analyseTemplateColors[i] == 0 ? Color.white : Color.black;
             slotText.text = string.Format(
                 "{0}{1}",
                 Mathf.Abs(analyseValues[i]),
@@ -62,7 +62,7 @@ public class AnalyseSystem : MonoBehaviour, IGameListener
         {
             int sum = 0;
             for (int j = 0; j < animal.analyse.Length; j += 6)
-                sum += animal.analyse[j];
+                sum += animal.analyse[i + j];
                 
             if (analyseTemplateColors[i] == 0)
             {
@@ -116,7 +116,7 @@ public class AnalyseSystem : MonoBehaviour, IGameListener
             }
             for (int j = 0; j < 5; j++)
             {
-                animal.analyse[i * 5 + j] = column[j];
+                animal.analyse[i + j * 6] = column[j];
             }
         }
 
@@ -126,7 +126,7 @@ public class AnalyseSystem : MonoBehaviour, IGameListener
             int[] column = generateIllColumn(analyseValues[i], analyseTemplateColors[i]);
             for (int j = 0; j < 5; j++)
             {
-                animal.analyse[i * 5 + j] = column[j];
+                animal.analyse[i + j * 6] = column[j];
             }
         }
 
@@ -142,7 +142,7 @@ public class AnalyseSystem : MonoBehaviour, IGameListener
             int[] column = generateHealthyColumn(analyseValues[i], analyseTemplateColors[i]);
             for (int j = 0; j < 5; j++)
             {
-                animal.analyse[i * 5 + j] = column[j];
+                animal.analyse[i + j * 6] = column[j];
             }
         }
 
@@ -193,5 +193,10 @@ public class AnalyseSystem : MonoBehaviour, IGameListener
         }
 
         return columns;
+    }
+
+    public void OnChoiceDone(GameControllerScript game, Animal animal)
+    {
+        analyseAdded = true;
     }
 }

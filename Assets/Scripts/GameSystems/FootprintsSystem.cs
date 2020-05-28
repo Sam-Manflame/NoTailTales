@@ -56,4 +56,9 @@ public class FootprintsSystem : MonoBehaviour, IGameListener
     {
         return footprintsAdded;
     }
+
+    public void OnChoiceDone(GameControllerScript game, Animal animal)
+    {
+        footprintsAdded = true;
+    }
 }

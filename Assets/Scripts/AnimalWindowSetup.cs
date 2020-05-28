@@ -25,6 +25,11 @@ public class AnimalWindowSetup : MonoBehaviour, IGameListener
 
     }
 
+    public void OnChoiceDone(GameControllerScript game, Animal animal)
+    {
+
+    }
+
     public void setup(Animal animal, int animalCounter, Images images)
     {
         animalTitle.text = string.Format("ANIMAL #{0}", animalCounter + 1);

@@ -54,6 +54,11 @@ public class VoiceSystem : MonoBehaviour, IGameListener
         specialLevelSettings();
     }
 
+    public void OnChoiceDone(GameControllerScript game, Animal animal)
+    {
+        diagramAdded = true;
+    }
+
     private void specialLevelSettings()
     {
         if (currentDay.id == 1)

@@ -24,6 +24,11 @@ public class RulesSetup : MonoBehaviour, IGameListener
         setup(day.id, day.getRulesAsStrings());
     }
 
+    public void OnChoiceDone(GameControllerScript game, Animal animal)
+    {
+
+    }
+
     public void setup(int day, List<string> rules)
     {
         titleText.text = string.Format(dayCounterString, day);

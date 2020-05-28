@@ -9,10 +9,19 @@ public class AudioSystem : MonoBehaviour
 
     [SerializeField]
     private AudioClip animalSpeakSound;
+
+    [SerializeField]
+    private AudioClip dayEndSound;
     
     public void playAnimalVoice()
     {
         mainAudioSource.clip = animalSpeakSound;
+        mainAudioSource.Play();
+    }
+
+    public void playDayEndSound()
+    {
+        mainAudioSource.clip = dayEndSound;
         mainAudioSource.Play();
     }
 }

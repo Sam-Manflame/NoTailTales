@@ -45,8 +45,16 @@ public class InteractionSystem : MonoBehaviour, IGameListener
         }
     }
 
+    public void OnChoiceDone(GameControllerScript game, Animal animal)
+    {
+        currentAnimal = null;
+    }
+
     public void animalInteract()
     {
+        if (currentAnimal == null)
+            return;
+
         bool infoNow = false;
         if (!infoCardAdded && currentAnimal.info != null)
         {
