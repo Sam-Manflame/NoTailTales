@@ -30,10 +30,10 @@
       },
       {"name": "PETER PORKER", "typeName": "NY Pig", "typeId": "pig", "iconId": "pig1", "voice": "wolf", "footprints": "pig",
         "analyse":
-        [0, 1, 1, 0, 0, 0,
-          1, 0, 0, 1, 1, 0,
+         [1, 1, 1, 0, 0, 0,
+          1, 0, 0, 1, 1, 1,
           0, 0, 0, 1, 0, 1,
-          1, 1, 0, 0, 1, 0,
+          1, 0, 0, 1, 1, 0,
           1, 0, 1, 1, 0, 1]
       },
       {"name": "LAURA PIGPALMER", "typeName": "Lazy Pig", "typeId": "wolf", "iconId": "pig2", "voice": "wolf", "footprints": "pig",
@@ -47,19 +47,19 @@
       {"name": "KYLE COWLACHLAN", "typeName": "Red Bull", "typeId": "cow", "iconId": "cow2", "voice": "cow", "footprints": "cow",
         "info": "HAVE YOU SEEN LAURA PIGPALMER? PLEASE NAVIGATE ME TO HER",
         "analyse":
-        [0, 1, 1, 0, 0, 0,
-          1, 0, 1, 1, 1, 0,
-          0, 0, 1, 1, 0, 1,
-          1, 1, 1, 0, 1, 0,
+        [1, 1, 1, 0, 0, 0,
+          1, 0, 0, 1, 1, 1,
+          0, 0, 0, 1, 0, 1,
+          1, 0, 0, 1, 1, 0,
           1, 0, 1, 1, 0, 1]
       },
       {"name": "DIANA FRIENDSHEEP", "typeName": "Italian Sheep", "typeId": "sheep", "iconId": "sheep1", "voice": "pig", "footprints": "sheep",
         "infoVoice": "AND I SAY HEY, LET'S BE FRIENDS",
         "analyse":
-        [0, 1, 1, 0, 0, 0,
+        [1, 0, 1, 0, 0, 0,
+          1, 0, 0, 1, 1, 1,
+          1, 0, 0, 1, 0, 1,
           1, 0, 0, 1, 1, 0,
-          0, 0, 0, 1, 0, 1,
-          1, 1, 0, 0, 1, 0,
           1, 0, 1, 1, 0, 1]},
       {"name": "BERNARD PIGMALION", "typeName": "English Pig", "typeId": "pig", "iconId": "pig1", "voice": "pig", "footprints": "pig",
         "analyse":
@@ -79,10 +79,10 @@
       {"name": "ED SHEEPRAN", "typeName": "London Sheep", "typeId": "sheep", "iconId": "sheep2", "voice": "cow", "footprints": "sheep",
         "infoVoice": "I'M IN LOVE WITH THE SHEEP OF YOUUU",
         "analyse":
-        [0, 1, 1, 0, 0, 0,
-          1, 0, 0, 1, 1, 0,
+        [1, 1, 1, 0, 0, 0,
+          1, 0, 0, 1, 1, 1,
           0, 0, 0, 1, 0, 1,
-          1, 1, 0, 0, 1, 0,
+          1, 0, 0, 1, 1, 0,
           1, 0, 1, 1, 0, 1]},
       {"name": "QUENTIN COWBOY", "typeName": "Violent Bull", "typeId": "cow", "iconId": "cow2", "voice": "cow", "footprints": "cow",
         "analyse":
@@ -95,11 +95,13 @@
         "infoVoice": "WHEN YOU PLAY VIOLIN, NO ONE PAYS ATTENTION TO YOUR VOICE",
         "analyse":
         [1, 1, 1, 0, 0, 0,
+          1, 0, 0, 1, 1, 1,
+          0, 0, 0, 1, 0, 1,
           1, 0, 0, 1, 1, 0,
-          1, 0, 0, 1, 0, 1,
-          1, 1, 0, 0, 1, 1,
-          1, 0, 0, 1, 0, 1]}
+          1, 0, 1, 1, 0, 1]}
 	],
+    "expenses": [
+      {"name": "GET FOOD", "cost": 10, "day": 4, "info": "Without food I'll die in {0} days"}, {"name": "GET BED", "cost": 16, "day": 8, "info": "Without bed I'll die in {0} days. In pain"}, {"name": "GET WATER", "cost": 20, "day": 2, "info": "No water - no life in {0} days"}, {"name": "GET WATER", "cost": 30, "day": 14, "info": "Bill will kill me in {0} days. \n I should do it firstly."}],
 	"analysTemplate": [-2, -3, 4, -1, 5, 3],
 	"analysTemplateColors" : [1, 0, 1, 1, 0, 0]
 }

@@ -237,6 +237,11 @@ public class GameControllerScript : MonoBehaviour, IGameListener
             return;
         }
 
+        if (getCurrentAnimal().name.Equals("LADY COWID") && choice == "accept")
+        {
+            PlayerPrefs.SetInt("cowidAch", 1);
+        }
+
         addToHistory(getCurrentAnimal(), choice);
         makeRemoveable();
 
