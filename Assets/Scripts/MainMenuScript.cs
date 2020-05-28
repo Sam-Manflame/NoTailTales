@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour
@@ -7,16 +8,24 @@ public class MainMenuScript : MonoBehaviour
     public int settingsScene;
     public int creditsScene;
 
+    [SerializeField]
+    private Text newGameButtonText;
+
     private void Start()
     {
-        // TODO: change NEW GAME to CONTINUE
+        if (PlayerPrefs.GetInt("dayId", 1) > 1)
+        {
+            newGameButtonText.text = "CONTINUE";
+        }
     }
 
     public void newGamePressed()
     {
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.SetInt("dayId", 1);
-        PlayerPrefs.Save();
+        if (PlayerPrefs.GetInt("dayId", -3) == -3)
+        {
+            PlayerPrefs.SetInt("dayId", 1);
+            PlayerPrefs.Save();
+        }
 
         SceneManager.LoadScene(radioScene);
     }
