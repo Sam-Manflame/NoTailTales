@@ -1,39 +1,108 @@
 {
 	"id": 2,
     "radio": [
-      "KHRRR.. FUCKING RADIO! KHR.. GUYS. I HAVE BAD NEWS. \n PLEASE, DON'T WORRY AND DON'T KHRR.. LEAVE.",
-      "FOREST FIRES HAVE TOTALLY.. KHR.. COVERED AUSTRAMBLIA. \n WILDFIRES HAVE COME TOO CLOSE.. KHRR.. TO THE FARM.",
-      "FORESTS ARE ON FIRE, ANIMALS RUN AWAY, TERRIFIED. KHRRR.. \n BUT.. WE MUST DO OUR JOB AS FIREMEN DO THEIR.",
-      "WE SHOULD SAVE ANIMALS FROM.. KHR.. DEATH AND GET THEM INSIDE. \n BEWARE OF WOLVES AND BLESS YOU ALL.",
-      "PLEASE, DON'T FORGET.. KH-KHRRR.. : \n IF THE FARMER IS RICH - SO IS THE NATION. \n KHRR.."
+      "KHR.. FUCKING RADIO! GUYS. I HAVE BAD NEWS. \n FOREST FIRES HAVE TOTALLY COVERED AUSTRAMBLIA.",
+      "FORESTS ARE ON FIRE, ANIMALS RUN AWAY, TERRIFIED. \n YET WE MUST DO OUR JOB AS FIREMEN DO THEIR.",
+      "WE SHOULD SAVE ANIMALS FROM DEATH AND GET THEM INSIDE. \n CHECK VOICES, BEWARE OF WOLVES AND BLESS YOU ALL.",
+      "PLEASE, DON'T FORGET: \n IF THE FARMER IS RICH - SO IS THE NATION. \n KHRR.."
     ],
     "rules": [
       {"rule": "NO WOLVES. \n CALL TO REPORT THEM", "noValues": ["wolf"]},
-      {"rule": "FARM ANIMALS \n ARE WELCOME", "noValues": []},
-      {"rule": "INTERACT WITH \n ANIMALS WITH \n DISCREPANCIES", "noValues": []}
+      {"rule": "NO INFECTED \n ANIMALS", "noValues": ["infected"]},
+      {"rule": "INTERACT WITH \n ANIMALS WITH \n VOICE DISCREPANCIES", "noValues": []}
     ],
 	"animals": [
-      {"name": "LADY COWID", "typeName": "Chinese Cow", "typeId": "cow", "iconId": "cow1", "voice": "cow", "footprints": "cow"},
-      {"name": "ALBERT WOLFENSTEIN", "typeName": "German Wolf", "typeId": "wolf", "iconId": "wolf", "voice": "wolf", "footprints": "wolf"},
-      {"name": "PETER PORKER", "typeName": "NY Pig", "typeId": "pig", "iconId": "pig1", "voice": "wolf", "footprints": "pig"},
+      {"name": "LADY COWID", "typeName": "Chinese Cow", "typeId": "cow", "iconId": "cow1", "voice": "cow", "footprints": "cow",
+        "analyse":
+        [1, 0, 1, 0, 0, 0,
+          1, 0, 0, 1, 1, 0,
+          0, 0, 0, 1, 0, 1,
+          1, 1, 0, 0, 1, 1,
+          0, 0, 1, 1, 0, 1]
+      },
+      {"name": "ALBERT WOLFENSTEIN", "typeName": "German Wolf", "typeId": "wolf", "iconId": "wolf", "voice": "wolf", "footprints": "wolf",
+        "analyse":
+        [0, 1, 1, 0, 0, 0,
+          1, 0, 0, 1, 1, 0,
+          0, 0, 0, 1, 0, 1,
+          1, 1, 0, 0, 1, 0,
+          1, 0, 1, 1, 0, 1]
+      },
+      {"name": "PETER PORKER", "typeName": "NY Pig", "typeId": "pig", "iconId": "pig1", "voice": "wolf", "footprints": "pig",
+        "analyse":
+        [0, 1, 1, 0, 0, 0,
+          1, 0, 0, 1, 1, 0,
+          0, 0, 0, 1, 0, 1,
+          1, 1, 0, 0, 1, 0,
+          1, 0, 1, 1, 0, 1]
+      },
       {"name": "LAURA PIGPALMER", "typeName": "Lazy Pig", "typeId": "wolf", "iconId": "pig2", "voice": "pig", "footprints": "wolf",
-        "infoFootprints": "I FEEL I'LL BE DEAD SOON, PLEASE SAVE ME"},
+        "infoFootprints": "I FEEL I'LL BE DEAD SOON, PLEASE SAVE ME",
+        "analyse":
+        [0, 0, 1, 0, 0, 0,
+          0, 0, 0, 1, 0, 0,
+          1, 0, 0, 1, 0, 1,
+          1, 1, 0, 0, 0, 0,
+          1, 1, 1, 1, 0, 0]},
       {"name": "KYLE COWLACHLAN", "typeName": "Red Bull", "typeId": "cow", "iconId": "cow2", "voice": "cow", "footprints": "cow",
-        "info": "HAVE YOU SEEN LAURA PIGPALMER? PLEASE NAVIGATE ME TO HER"},
+        "info": "HAVE YOU SEEN LAURA PIGPALMER? PLEASE NAVIGATE ME TO HER",
+        "analyse":
+        [0, 1, 1, 0, 0, 0,
+          1, 0, 1, 1, 1, 0,
+          0, 0, 1, 1, 0, 1,
+          1, 1, 1, 0, 1, 0,
+          1, 0, 1, 1, 0, 1]
+      },
       {"name": "DIANA FRIENDSHEEP", "typeName": "Italian Sheep", "typeId": "sheep", "iconId": "sheep1", "voice": "pig", "footprints": "sheep",
-        "infoVoice": "AND I SAY HEY, LET'S BE FRIENDS"},
-      {"name": "BERNARD PIGMALION", "typeName": "English Pig", "typeId": "pig", "iconId": "pig1", "voice": "pig", "footprints": "pig"},
+        "infoVoice": "AND I SAY HEY, LET'S BE FRIENDS",
+        "analyse":
+        [0, 1, 1, 0, 0, 0,
+          1, 0, 0, 1, 1, 0,
+          0, 0, 0, 1, 0, 1,
+          1, 1, 0, 0, 1, 0,
+          1, 0, 1, 1, 0, 1]},
+      {"name": "BERNARD PIGMALION", "typeName": "English Pig", "typeId": "pig", "iconId": "pig1", "voice": "pig", "footprints": "pig",
+        "analyse":
+        [1, 0, 1, 0, 0, 0,
+          1, 1, 1, 1, 1, 0,
+          0, 0, 1, 1, 0, 1,
+          0, 1, 1, 0, 1, 0,
+          1, 0, 1, 1, 0, 1]},
       {"name": "WOLFGANG MOZART", "typeName": "Austrian Wolf", "typeId": "wolf", "iconId": "wolf", "voice": "pig", "footprints": "wolf",
-        "infoVoice": "I HAD TO FINISH THE 9TH SYMPHONY. I HEARD YOU HAVE A PIANO"},
+        "infoVoice": "I HAD TO FINISH THE 9TH SYMPHONY. I HEARD YOU HAVE A PIANO",
+        "analyse":
+        [0, 0, 1, 0, 0, 0,
+          1, 0, 0, 1, 1, 1,
+          1, 0, 1, 1, 0, 1,
+          0, 0, 0, 0, 1, 0,
+          1, 0, 1, 1, 0, 1]},
       {"name": "ED SHEEPRAN", "typeName": "London Sheep", "typeId": "sheep", "iconId": "sheep2", "voice": "cow", "footprints": "sheep",
-        "infoVoice": "I'M IN LOVE WITH THE SHEEP OF YOUUU"},
-      {"name": "QUENTIN COWBOY", "typeName": "Violent Bull", "typeId": "cow", "iconId": "cow2", "voice": "cow", "footprints": "cow"},
+        "infoVoice": "I'M IN LOVE WITH THE SHEEP OF YOUUU",
+        "analyse":
+        [0, 1, 1, 0, 0, 0,
+          1, 0, 0, 1, 1, 0,
+          0, 0, 0, 1, 0, 1,
+          1, 1, 0, 0, 1, 0,
+          1, 0, 1, 1, 0, 1]},
+      {"name": "QUENTIN COWBOY", "typeName": "Violent Bull", "typeId": "cow", "iconId": "cow2", "voice": "cow", "footprints": "cow",
+        "analyse":
+        [1, 0, 1, 0, 0, 0,
+          1, 0, 0, 1, 1, 0,
+          0, 0, 0, 1, 0, 1,
+          1, 1, 0, 0, 1, 1,
+          1, 0, 1, 1, 0, 1]},
       {"name": "NICCOLO PIGANINI", "typeName": "Italian Royal Pig", "typeId": "pig", "iconId": "pig2", "voice": "wolf", "footprints": "pig",
-        "infoVoice": "WHEN YOU PLAY VIOLIN, NO ONE PAYS ATTENTION TO YOUR VOICE"}
+        "infoVoice": "WHEN YOU PLAY VIOLIN, NO ONE PAYS ATTENTION TO YOUR VOICE",
+        "analyse":
+        [1, 1, 1, 0, 0, 0,
+          1, 0, 0, 1, 1, 0,
+          1, 0, 0, 1, 0, 1,
+          1, 1, 0, 0, 1, 1,
+          1, 0, 0, 1, 0, 1]}
 	],
     "expenses": [
-        {"name": "GET FOOD", "cost": 10}, {"name": "GET BED", "cost": 16}, {"name": "GET WATER", "cost": 20}, {"name": "GET WATER", "cost": 30}],
-	"analysTemplate": [2, 3, -4, 1, -5, -3],
+      {"name": "GET FOOD", "cost": 10, "day": 4, "info": "Without food I'll die in {0} days"}, {"name": "GET BED", "cost": 16, "day": 8, "info": "Without bed I'll die in {0} days. In pain"}, {"name": "GET WATER", "cost": 20, "day": 2, "info": "No water - no life in {0} days"}, {"name": "GET WATER", "cost": 30, "day": 14, "info": "Bill will kill me in {0} days. \n I should do it firstly."}],
+	"analysTemplate": [-2, -3, 4, -1, 5, 3],
 	"analysTemplateColors" : [1, 0, 1, 1, 0, 0]
 }
 

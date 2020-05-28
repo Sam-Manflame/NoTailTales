@@ -1,19 +1,14 @@
 {
 	"id": 3,
 	"radio": [
-		"KH-RRR.. Morning, guys. \n We've passed through the first day of this. Together.",
-		"We've saved the animals - get them on the farm. \n We do good things, guys, we'll be blessed. \n But there is a big problem:",
-		"Some animals were infected.. KH-RRR.. \n With strange virus. And it's spreading",
-		"Every animal's health has to be checked \n from now on. You'll be given instructions.",
-		"Our goal is to save animals, so we should save them \n not only from fire, but from virus as well.",
-		"KH-RRR.. [whispering] In order to.. KH-KHRR.. \n sell them.. KH-RRR.. HA-HA-HA \n Oh, wait guys.. KH-RR..",
-		"What d'you mean I was heard, huh?.. KHRRR.. \n You're kidding, maaan. Go off!.. KH-RRR..",
+		"KHR.. Morning, guys. The 1st day is done.. \n We've saved animals, but wolves are getting smarter.",
+		"We check footprints of each animal from now on. \n Discrepancies between farm animals are ok. \n Wolves excluded. You'll be given instructions.",
 		"And of course don't forget: \n IF THE FARMER IS RICH - SO IS THE NATION. \n KHRRR..."
 	],
 	"rules": [
 		{"rule": "NO WOLVES", "noValues": ["wolf"]},
-		{"rule": "NO INFECTED ANIMALS", "noValues": ["infected"]},
-		{"rule": "HEALTHY FARM ANIMALS \n ARE WELCOME", "noValues": []}
+		{"rule": "NO INFECTED \n ANIMALS", "noValues": ["infected"]},
+		{"rule": "INTERACT WITH \n ANIMALS WITH \n DISCREPANCIES", "noValues": []}
 	],
 	"animals": [
         {"name": "MERYL SHEEP", "typeName": "American Sheep", "typeId": "sheep", "iconId": "sheep2", "voice": "sheep", "footprints": "sheep",
@@ -64,7 +59,8 @@
 			0, 0, 0, 1, 0, 1,
 			1, 1, 0, 0, 1, 1,
 			1, 0, 1, 1, 0, 1]},
-		{"name": "GRANNY PORKER", "typeName": "NY Pig", "typeId": "pig", "iconId": "pig2", "voice": "pig", "footprints": "pig", "analyse":
+		{"name": "GRANNY PORKER", "typeName": "NY Pig", "typeId": "pig", "iconId": "pig2", "voice": "pig", "footprints": "pig",
+			"analyse":
 			[0, 1, 1, 0, 0, 0,
 			1, 0, 1, 1, 1, 0,
 			0, 0, 1, 1, 0, 1,
@@ -77,13 +73,15 @@
 			0, 0, 0, 1, 0, 1,
 			1, 1, 0, 0, 1, 0,
 			1, 0, 1, 1, 0, 1]},
-		{"name": "BERNARD PIGMALION", "typeName": "English Pig", "typeId": "pig", "iconId": "pig1", "voice": "pig", "footprints": "pig", "analyse":
+		{"name": "BERNARD PIGMALION", "typeName": "English Pig", "typeId": "pig", "iconId": "pig1", "voice": "pig", "footprints": "pig",
+			"analyse":
 		[0, 1, 1, 0, 0, 0,
 			1, 0, 0, 1, 1, 0,
 			0, 0, 0, 1, 0, 1,
 			1, 1, 0, 0, 1, 0,
 			1, 0, 1, 1, 0, 1]},
-		{"name": "JENNA BIOWOLF", "typeName": "Polish Wolf", "typeId": "wolf", "iconId": "wolf", "voice": "wolf", "footprints": "wolf", "analyse":
+		{"name": "JENNA BIOWOLF", "typeName": "Polish Wolf", "typeId": "wolf", "iconId": "wolf", "voice": "wolf", "footprints": "wolf",
+			"analyse":
 		[0, 1, 1, 0, 0, 0,
 			1, 0, 0, 1, 1, 0,
 			0, 0, 0, 1, 0, 1,

@@ -3,12 +3,12 @@
 	"radio": [
 		"KH-KHRR.. Good morning everyone on Happy Farm! \n Today is the the last working day before Golden Week holidays.",
 		"So let's get the work done. \n Pigs, cows and sheep are waiting for your attention, buddies.",
-		"Don't forget: \n IF THE FARMER IS RICH - SO IS THE NATION. \n KHRR.."
+		"Don't forget: \n IF THE FARMER IS RICH - SO IS THE NATION! \n KHRR.."
 	],
 	"rules": [
-		{"rule": "WELCOME COWS", "noValues": []},
-		{"rule": "WELCOME PIGS", "noValues": []},
-		{"rule": "WELCOME SHEEP", "noValues": []}
+		{"rule": "WELCOME HEALTHY COWS", "noValues": [infected]},
+		{"rule": "WELCOME HEALTHY PIGS", "noValues": []},
+		{"rule": "WELCOME HEALTHY SHEEP", "noValues": []}
 	],
 	"animals": [
 		{"name": "HARRY PIGSTER", "typeName": "African Pig", "typeId": "pig", "iconId": "pig1", "voice": "pig", "footprints": "pig",
