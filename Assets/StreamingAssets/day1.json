@@ -6,7 +6,7 @@
 		"Don't forget: \n IF THE FARMER IS RICH - SO IS THE NATION! \n KHRR.."
 	],
 	"rules": [
-		{"rule": "WELCOME HEALTHY COWS", "noValues": [infected]},
+		{"rule": "WELCOME HEALTHY COWS", "noValues": ["infected"]},
 		{"rule": "WELCOME HEALTHY PIGS", "noValues": []},
 		{"rule": "WELCOME HEALTHY SHEEP", "noValues": []}
 	],

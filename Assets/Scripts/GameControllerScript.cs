@@ -202,10 +202,10 @@ public class GameControllerScript : MonoBehaviour, IGameListener
 
     public void doChoice(string choice)
     {
-        //if (currentDay.id == 1 && animalCounter == 2)
+        if (currentDay.id == 1 && animalCounter == 2)
         {
-            //StartCoroutine(firstDayEnd());
-            //return;
+            StartCoroutine(firstDayEnd());
+            return;
         }
 
         addToHistory(getCurrentAnimal(), choice);
