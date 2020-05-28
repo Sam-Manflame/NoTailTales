@@ -10,6 +10,8 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     [SerializeField]
     private int radioScene;
     [SerializeField]
+    private int mainMenuScene = 0;
+    [SerializeField]
     private int levelFinishScene;
     [SerializeField]
     private float minutesInSecond = 2;
@@ -45,6 +47,8 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     private Image overlay;
     [SerializeField]
     private ClockSetup clock;
+    [SerializeField]
+    private GameObject pauseMenu;
 
     [Header("Top Panel")]
     [SerializeField]
@@ -71,6 +75,7 @@ public class GameControllerScript : MonoBehaviour, IGameListener
 
     private bool gotFreePenalty = true;
     private bool dayEnded = false;
+    private bool paused = false;
     
     private int dayEndTime = 18;
     private int h = 9;
@@ -132,6 +137,12 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     {
         while (h < dayEndTime)
         {
+            if (paused)
+            {
+                yield return new WaitForSeconds(1.0f / minutesInSecond);
+                continue;
+            }
+
             m += 1;
             if (m == 60)
             {
@@ -249,6 +260,7 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     private IEnumerator firstDayEnd()
     {
         overlay.gameObject.SetActive(true);
+        overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 0);
         while (overlay.color.a < 1f)
         {
             Color color = overlay.color;
@@ -259,6 +271,45 @@ public class GameControllerScript : MonoBehaviour, IGameListener
         PlayerPrefs.SetInt("dayId", 2);
         PlayerPrefs.Save();
         SceneManager.LoadScene(radioScene);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (paused)
+                unpause();
+            else
+                pause();
+        }
+    }
+
+    private void OnApplicationPause(bool isPause)
+    {
+        if (isPause)
+            pause();
+        else
+            unpause();
+    }
+
+    public void pause()
+    {
+        overlay.gameObject.SetActive(true);
+        overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 1);
+        pauseMenu.SetActive(true);
+        paused = true;
+    }
+
+    public void unpause()
+    {
+        overlay.gameObject.SetActive(false);
+        pauseMenu.SetActive(false);
+        paused = false;
+    }
+
+    public void goToMainMenu()
+    {
+        SceneManager.LoadScene(mainMenuScene);
     }
 
     public void addListener(IGameListener listener)
