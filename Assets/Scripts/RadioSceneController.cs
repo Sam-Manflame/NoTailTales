@@ -49,7 +49,16 @@ public class RadioSceneController : MonoBehaviour
         printingMessage.GetComponent<Text>().text = "";
         printingMessage.onEnded = () => StartCoroutine(delayedMessage());
         messageCounter = 0;
-        currentDay = Day.load(PlayerPrefs.GetInt("dayId"));
+
+        try
+        {
+            currentDay = Day.load(PlayerPrefs.GetInt("dayId"));
+        } catch (System.Exception e)
+        {
+            currentDay = Day.generate(PlayerPrefs.GetInt("dayId"));
+        }
+
+
         dayCounter.text = "DAY #" + currentDay.id;
 
         StartCoroutine(onAir());

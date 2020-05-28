@@ -101,7 +101,13 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     private void loadDay()
     {
         int dayId = PlayerPrefs.GetInt("dayId");
-        currentDay = Day.load(dayId);
+        try
+        {
+            currentDay = Day.load(dayId);
+        } catch (System.Exception e)
+        {
+            currentDay = Day.generate(dayId);
+        }
     }
 
     private Animal getCurrentAnimal()
@@ -160,6 +166,10 @@ public class GameControllerScript : MonoBehaviour, IGameListener
         {
             audioSystem.playDayEndSound();
             dayEnded = true;
+            if (!animalWindowSetup.gameObject.activeSelf)
+            {
+                endDay();
+            }
         }
     }
     

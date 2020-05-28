@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-[Serializable]
+[System.Serializable]
 public class Day
 {
     public int id;
@@ -15,8 +13,6 @@ public class Day
 
     public int[] analysTemplate;
     public int[] analysTemplateColors;
-
-    public Expense[] expenses;
 
     public string[] radio;
 
@@ -41,5 +37,27 @@ public class Day
         reader.Close();
 
         return JsonUtility.FromJson<Day>(jsonData);
+    }
+
+    public static Day generate(int id)
+    {
+        Day day = new Day();
+
+        day.id = id;
+        day.animals = new Animal[0];
+        day.rules = new Rule[3] { new Rule("NO WOLVES", "wolf"), new Rule("NO INFECTED\n ANIMALS", "infected"), new Rule("INTERACT WITH \n ANIMALS WITH \n DISCREPANCIES", "infected") };
+        day.analysTemplate = new int[6];
+        day.analysTemplateColors = new int[6];
+        for (int i = 0; i < day.analysTemplate.Length; i++)
+        {
+            day.analysTemplate[i] = Random.Range(-5, 6);
+            if (day.analysTemplate[i] == 0)
+                day.analysTemplate[i] = -1;
+            day.analysTemplateColors[i] = Random.Range(0, 2);
+        }
+
+        day.radio = new string[1] { string.Format("DAY #{0}\n IF THE FARMER IS RICH - SO IS THE NATION.", id) };
+
+        return day;
     }
 }

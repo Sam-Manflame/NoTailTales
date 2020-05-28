@@ -675,6 +675,8 @@ MonoBehaviour:
   radioScene: 4
   animalTypes: {fileID: 9064094853396145591, guid: 8f50ae9063de3e2458a1472f14532c86,
     type: 3}
+  expensesObj: {fileID: 7233223131963295066, guid: 7134ae8aaf57a8543a3190898fac7026,
+    type: 3}
   achievementHuman: {fileID: 2016623729}
   achievementMonkey: {fileID: 6868985}
   achievementVirus: {fileID: 463731466}

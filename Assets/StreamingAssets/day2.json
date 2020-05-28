@@ -36,8 +36,8 @@
           1, 1, 0, 0, 1, 0,
           1, 0, 1, 1, 0, 1]
       },
-      {"name": "LAURA PIGPALMER", "typeName": "Lazy Pig", "typeId": "wolf", "iconId": "pig2", "voice": "pig", "footprints": "wolf",
-        "infoFootprints": "I FEEL I'LL BE DEAD SOON, PLEASE SAVE ME",
+      {"name": "LAURA PIGPALMER", "typeName": "Lazy Pig", "typeId": "wolf", "iconId": "pig2", "voice": "wolf", "footprints": "pig",
+        "infoVoice": "I FEEL I'LL BE DEAD SOON, PLEASE SAVE ME",
         "analyse":
         [0, 0, 1, 0, 0, 0,
           0, 0, 0, 1, 0, 0,
@@ -100,8 +100,6 @@
           1, 1, 0, 0, 1, 1,
           1, 0, 0, 1, 0, 1]}
 	],
-    "expenses": [
-      {"name": "GET FOOD", "cost": 10, "day": 4, "info": "Without food I'll die in {0} days"}, {"name": "GET BED", "cost": 16, "day": 8, "info": "Without bed I'll die in {0} days. In pain"}, {"name": "GET WATER", "cost": 20, "day": 2, "info": "No water - no life in {0} days"}, {"name": "GET WATER", "cost": 30, "day": 14, "info": "Bill will kill me in {0} days. \n I should do it firstly."}],
 	"analysTemplate": [-2, -3, 4, -1, 5, 3],
 	"analysTemplateColors" : [1, 0, 1, 1, 0, 0]
 }

@@ -45,7 +45,7 @@ public class FootprintsSystem : MonoBehaviour, IGameListener
 
     public void OnGameInit(GameControllerScript game, Day day)
     {
-        if (day.id <= 1)
+        if (day.id <= 2)
         {
             footrpintsTemplate.gameObject.SetActive(false);
             footprintsButton.gameObject.SetActive(false);

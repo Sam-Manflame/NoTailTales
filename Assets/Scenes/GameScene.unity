@@ -3703,7 +3703,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 465699108}
+      - m_Target: {fileID: 778805998}
         m_MethodName: animalInteract
         m_Mode: 1
         m_Arguments:

@@ -1,7 +1,7 @@
-﻿[System.Serializable]
-public class Expenses
-{
-    public string[] expenses;
+﻿using UnityEngine;
 
-    public int[] cost;
+[System.Serializable]
+public class Expenses : MonoBehaviour
+{
+    public Expense[] expenses;
 }

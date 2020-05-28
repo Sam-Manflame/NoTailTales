@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class FinishSceneController : MonoBehaviour
 {
@@ -15,6 +14,8 @@ public class FinishSceneController : MonoBehaviour
     private int radioScene = 4;
     [SerializeField]
     private AnimalTypes animalTypes;
+    [SerializeField]
+    private Expenses expensesObj;
 
     [Header("Achievements")]
     [SerializeField]
@@ -59,6 +60,8 @@ public class FinishSceneController : MonoBehaviour
     private Button saveButton;
     
     private int moneyEarned;
+
+    private Expenses expenses = null;
 
     void Start()
     {
@@ -132,11 +135,11 @@ public class FinishSceneController : MonoBehaviour
             pos.y -= (line.rect.height - 5) * i;
             newLine.localPosition = pos;
 
-            newLine.GetComponentsInChildren<Text>()[0].text = expenses.expenses[i];
-            newLine.GetComponentsInChildren<Text>()[1].text = expenses.cost[i].ToString();
+            newLine.GetComponentsInChildren<Text>()[0].text = expenses.expenses[i].name;
+            newLine.GetComponentsInChildren<Text>()[1].text = expenses.expenses[i].cost.ToString();
             newLine.GetComponentInChildren<Button>().onClick.AddListener(() => expenseClick(expenses, index));
 
-            if (moneyEarned < expenses.cost[i])
+            if (moneyEarned < expenses.expenses[i].cost)
             {
                 newLine.GetComponentsInChildren<Text>()[1].color = Color.red;
                 newLine.GetComponentsInChildren<Image>()[2].color = Color.red;
@@ -151,10 +154,10 @@ public class FinishSceneController : MonoBehaviour
         if (expensesLines.GetChild(index + 1).GetComponentsInChildren<Image>()[2].sprite == statusX)
         {
             Debug.Log(index + " x");
-            if (expenses.cost[index] <= moneyEarned)
+            if (expenses.expenses[index].cost <= moneyEarned)
             {
                 expensesLines.GetChild(index + 1).GetComponentsInChildren<Image>()[2].sprite = statusOk;
-                moneyEarned -= expenses.cost[index];
+                moneyEarned -= expenses.expenses[index].cost;
                 updateExpenses(expenses);
                 updateSaved();
             }
@@ -163,7 +166,7 @@ public class FinishSceneController : MonoBehaviour
             Debug.Log(index + " ok");
             expensesLines.GetChild(index + 1).GetComponentsInChildren<Image>()[2].sprite = statusX;
 
-            moneyEarned += expenses.cost[index];
+            moneyEarned += expenses.expenses[index].cost;
             updateExpenses(expenses);
             updateSaved();
         }
@@ -176,7 +179,7 @@ public class FinishSceneController : MonoBehaviour
 
         for (int i = 0; i < expenses.expenses.Length; i++)
         {
-            if (moneyEarned < expenses.cost[i])
+            if (moneyEarned < expenses.expenses[i].cost)
             {
                 if (expensesLines.GetChild(i + 1).GetComponentsInChildren<Image>()[2].sprite == statusX)
                 {
@@ -213,11 +216,26 @@ public class FinishSceneController : MonoBehaviour
         updateSaved();
     }
 
+    private void saveExpenses()
+    {
+        Expenses expenses = getExpenses();
+
+        for (int i = 0; i < expenses.expenses.Length; i++)
+        {
+            if (expensesLines.GetChild(i + 1).GetComponentsInChildren<Image>()[2].sprite == statusOk)
+            {
+                PlayerPrefs.SetInt(expenses.expenses[i].name, PlayerPrefs.GetInt("dayId"));
+                Debug.Log(expenses.expenses[i].name + " was bought at day " + PlayerPrefs.GetInt("dayId"));
+            }
+        }
+        PlayerPrefs.Save();
+    }
+
     public void nextDay()
     {
         saveMoney();
 
-        // TODO save expenses
+        saveExpenses();
 
         SceneManager.LoadScene(radioScene);
     }
@@ -229,19 +247,42 @@ public class FinishSceneController : MonoBehaviour
 
     private Expenses getExpenses()
     {
-        Day day = Day.load(PlayerPrefs.GetInt("dayId") - 1);
-
-        Expenses expenses = new Expenses();
-        if (day.expenses == null)
-            return null;
-        expenses.expenses = new string[day.expenses.Length];
-        expenses.cost = new int[day.expenses.Length];
-
-        for (int i = 0; i < day.expenses.Length; i++)
+        if (expenses == null)
         {
-            expenses.expenses[i] = day.expenses[i].name;
-            expenses.cost[i] = day.expenses[i].cost;
+            expenses = Instantiate(expensesObj) as Expenses;
+            List<Expense> left = new List<Expense>();
+
+            foreach (Expense expense in expensesObj.expenses)
+            {
+                if (!gotExpense(expense) || expense.infinite)
+                {
+                    left.Add(expense);
+                    expense.day = getExpenseDays(expense);
+                    if (expense.day == 0)
+                    {
+                        gameOver(expense.name);
+                    }
+                }
+            }
+
+            expenses.expenses = left.ToArray();
         }
+
         return expenses;
+    }
+
+    private bool gotExpense(Expense expense)
+    {
+        return PlayerPrefs.GetInt(expense.name, -1) != -1;
+    }
+
+    private int getExpenseDays(Expense expense)
+    {
+        return expense.day - (PlayerPrefs.GetInt("dayId") - PlayerPrefs.GetInt(expense.name, 1));
+    }
+
+    private void gameOver(string reason)
+    {
+        Debug.Log("game over because of " + reason);
     }
 }
