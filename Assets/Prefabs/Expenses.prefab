@@ -62,5 +62,5 @@ MonoBehaviour:
   - name: KILL BILL
     cost: 30
     day: 14
-    info: Bill will kill me in {0} days.\nI should do it firstly.
+    info: Bill will kill me in {0} days. I should do it firstly.
     infinite: 0

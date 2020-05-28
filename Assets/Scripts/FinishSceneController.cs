@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Collections;
 
 public class FinishSceneController : MonoBehaviour
 {
@@ -139,6 +140,10 @@ public class FinishSceneController : MonoBehaviour
             newLine.GetComponentsInChildren<Text>()[1].text = expenses.expenses[i].cost.ToString();
             newLine.GetComponentInChildren<Button>().onClick.AddListener(() => expenseClick(expenses, index));
 
+            newLine.GetComponentsInChildren<Button>()[1].onClick.AddListener(() => StartCoroutine(infoCoroutine(newLine.GetChild(newLine.childCount - 1))));
+
+            newLine.GetChild(newLine.childCount - 1).GetComponentInChildren<Text>().text = string.Format(expenses.expenses[i].info, getExpenseDays(expenses.expenses[i]));
+
             if (moneyEarned < expenses.expenses[i].cost)
             {
                 newLine.GetComponentsInChildren<Text>()[1].color = Color.red;
@@ -170,6 +175,13 @@ public class FinishSceneController : MonoBehaviour
             updateExpenses(expenses);
             updateSaved();
         }
+    }
+
+    private IEnumerator infoCoroutine(Transform info)
+    {
+        info.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        info.gameObject.SetActive(false);
     }
 
     private void updateExpenses(Expenses expenses)
@@ -257,8 +269,7 @@ public class FinishSceneController : MonoBehaviour
                 if (!gotExpense(expense) || expense.infinite)
                 {
                     left.Add(expense);
-                    expense.day = getExpenseDays(expense);
-                    if (expense.day == 0)
+                    if (getExpenseDays(expense) == 0)
                     {
                         gameOver(expense.name);
                     }
@@ -278,7 +289,7 @@ public class FinishSceneController : MonoBehaviour
 
     private int getExpenseDays(Expense expense)
     {
-        return expense.day - (PlayerPrefs.GetInt("dayId") - PlayerPrefs.GetInt(expense.name, 1));
+        return expense.day - (PlayerPrefs.GetInt("dayId") - PlayerPrefs.GetInt(expense.name, 2));
     }
 
     private void gameOver(string reason)
