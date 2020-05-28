@@ -29,6 +29,8 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     private FootprintsSystem footprintsSystem;
     [SerializeField]
     private InteractionSystem interactionSystem;
+    [SerializeField]
+    private GenerationSystem generationSystem;
 
     [Header("UI Elements")]
     [SerializeField]
@@ -61,6 +63,9 @@ public class GameControllerScript : MonoBehaviour, IGameListener
     private Day currentDay;
     private int animalCounter = -1;
     private List<HistoryEntry> history = new List<HistoryEntry>();
+    private List<Animal> generatedAnimals = new List<Animal>();
+
+    private bool gotFreePenalty = true;
     
     private int dayEndTime = 18;
     private int h = 9;
@@ -91,6 +96,14 @@ public class GameControllerScript : MonoBehaviour, IGameListener
 
     private Animal getCurrentAnimal()
     {
+        if (animalCounter >= currentDay.animals.Length)
+        {
+            if (generatedAnimals.Count <= animalCounter - currentDay.animals.Length)
+            {
+                generatedAnimals.Add(generationSystem.generate());
+            }
+            return generatedAnimals[generatedAnimals.Count - 1];
+        }
         return currentDay.animals[animalCounter];
     }
 
@@ -140,7 +153,14 @@ public class GameControllerScript : MonoBehaviour, IGameListener
         string choiceResult = getChoiceResult(animal, action);
         if (choiceResult != null)
         {
-            spawnSystem.addPenaltyCard(choiceResult, 0);
+            AnimalType animalType = animalTypes.getTypeById(choiceResult);
+            spawnSystem.addPenaltyCard(animalType.penaltyString, animal.name, gotFreePenalty ? 0 : animalType.cost);
+
+            if (gotFreePenalty)
+            {
+                gotFreePenalty = false;
+                return;
+            }
         }
 
         history.Add(new HistoryEntry(animal, action));

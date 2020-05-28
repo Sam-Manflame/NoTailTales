@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -16,4 +15,12 @@ public class AnimalType
     public int cost = 0;
 
     public bool predator = false;
+
+    public bool special = false;
+
+    public string penaltyString = "";
+
+    [Header("Generation")]
+    public string[] iconsIds;
+    public string[] typeNames;
 }

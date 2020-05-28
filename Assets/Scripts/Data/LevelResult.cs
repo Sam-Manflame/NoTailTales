@@ -90,7 +90,7 @@ public class LevelResult
             }
         }
 
-        if (analyseSystem.isAnalyseGood(animal) && action.Equals("deny"))
+        if (analyseSystem.isAnalyseGood(animal) && (action.Equals("deny") || action.Equals("call")))
         {
             levelResult.increaseCountOf("healthyDenied");
             return;

@@ -94,4 +94,104 @@ public class AnalyseSystem : MonoBehaviour, IGameListener
     {
         return analyseAdded;
     }
+
+    // generation stuff
+
+    public Animal generateIllAnalyse(Animal animal)
+    {
+        animal.analyse = new int[30];
+
+        bool hasIllColumn = false;
+        for (int i = 0; i < analyseValues.Length; i++)
+        {
+            int[] column;
+            if (Random.Range(0, 2) == 0)
+            {
+                column = generateIllColumn(analyseValues[i], analyseTemplateColors[i]);
+                hasIllColumn = true;
+            }
+            else
+            {
+                column = generateHealthyColumn(analyseValues[i], analyseTemplateColors[i]);
+            }
+            for (int j = 0; j < 5; j++)
+            {
+                animal.analyse[i * 5 + j] = column[j];
+            }
+        }
+
+        if (!hasIllColumn)
+        {
+            int i = Random.Range(0, 7);
+            int[] column = generateIllColumn(analyseValues[i], analyseTemplateColors[i]);
+            for (int j = 0; j < 5; j++)
+            {
+                animal.analyse[i * 5 + j] = column[j];
+            }
+        }
+
+        return animal;
+    }
+
+    public Animal generateHealthy(Animal animal)
+    {
+        animal.analyse = new int[30];
+
+        for (int i = 0; i < analyseValues.Length; i++)
+        {
+            int[] column = generateHealthyColumn(analyseValues[i], analyseTemplateColors[i]);
+            for (int j = 0; j < 5; j++)
+            {
+                animal.analyse[i * 5 + j] = column[j];
+            }
+        }
+
+        return animal;
+    }
+
+    private int[] generateHealthyColumn(int val, int color)
+    {
+        if (val > 0)
+        {
+            return generateColumn(Random.Range(val, 6), color);
+        }
+        else
+        {
+            return generateColumn(Random.Range(0, val + 1), color);
+        }
+    }
+
+    private int[] generateIllColumn(int val, int color)
+    {
+        if (val > 0)
+        {
+            return generateColumn(Random.Range(0, val), color);
+        }
+        else
+        {
+            return generateColumn(Random.Range(val + 1, 6), color);
+        }
+    }
+
+    private int[] generateColumn(int count, int color)
+    {
+        int[] columns = new int[5];
+
+        for (int i = 0; i < 5; i++)
+        {
+            columns[i] = Mathf.Abs(color - 1);
+        }
+
+        while (count > 0)
+        {
+            int i = Random.Range(0, 5);
+            if (columns[i] != color)
+            {
+                columns[i] = color;
+                count -= 1;
+            }
+        }
+
+        return columns;
+    }
 }

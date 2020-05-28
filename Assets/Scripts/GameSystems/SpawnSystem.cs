@@ -60,8 +60,9 @@ public class SpawnSystem : MonoBehaviour
         textCard.GetComponentsInChildren<Text>()[1].text = text;
     }
 
-    public void addPenaltyCard(string reason, int moneyChange)
+    public void addPenaltyCard(string reason, string animalName, int moneyChange)
     {
-        spawnPrefab(penaltyPrefab.GetComponent<RectTransform>());
+        PenaltySetup penaltySetup = spawnPrefab(penaltyPrefab.GetComponent<RectTransform>()).GetComponent<PenaltySetup>();
+        penaltySetup.setup(reason, animalName, moneyChange);
     }
 }

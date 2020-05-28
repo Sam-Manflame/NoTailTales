@@ -50,51 +50,60 @@ MonoBehaviour:
     footprintsImage: {fileID: 21300000, guid: 2b13c663bc073a44c9c52aa8fe491fe1, type: 3}
     cost: 2
     predator: 0
+    penaltyString: 
   - typeId: wolf
     voiceMin: 4
     voiceMax: 6
     footprintsImage: {fileID: 21300000, guid: 7677df9f8d1e35b4991dd247f15affab, type: 3}
     cost: 0
-    predator: 0
+    predator: 1
+    penaltyString: 
   - typeId: cow
     voiceMin: 3
     voiceMax: 4
     footprintsImage: {fileID: 21300000, guid: 17fff29660a68ff488cd124fa60109c9, type: 3}
     cost: 6
     predator: 0
+    penaltyString: 
   - typeId: sheep
     voiceMin: 1
     voiceMax: 2
     footprintsImage: {fileID: 21300000, guid: 17fff29660a68ff488cd124fa60109c9, type: 3}
     cost: 4
     predator: 0
+    penaltyString: 
   - typeId: predatorCalled
     voiceMin: 0
     voiceMax: 0
     footprintsImage: {fileID: 0}
     cost: 10
     predator: 0
+    penaltyString: 
   - typeId: predatorAccepted
     voiceMin: 0
     voiceMax: 0
     footprintsImage: {fileID: 0}
     cost: -10
     predator: 0
+    penaltyString: PREDATOR ACCEPTED
   - typeId: goodAccepted
     voiceMin: 0
     voiceMax: 0
     footprintsImage: {fileID: 0}
     cost: 5
     predator: 0
+    penaltyString: 
   - typeId: illAccepted
     voiceMin: 0
     voiceMax: 0
     footprintsImage: {fileID: 0}
     cost: -10
     predator: 0
+    penaltyString: ILL ANIMAL ACCEPTED
   - typeId: healthyDenied
     voiceMin: 0
     voiceMax: 0
     footprintsImage: {fileID: 0}
     cost: -10
     predator: 0
+    penaltyString: HEALTHY ANIMAL DENIED
